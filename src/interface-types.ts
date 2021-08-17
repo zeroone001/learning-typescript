@@ -11,6 +11,8 @@
     只读成员
     动态成员
 */
+
+
 export {};
 interface Post {
     title: string;
