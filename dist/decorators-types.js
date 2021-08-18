@@ -16,6 +16,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 function sealed(constructor) {
     console.log('123');
 }
+// 装饰器
 let Greeter = class Greeter {
     constructor(msg) {
         this.greeting = msg;
