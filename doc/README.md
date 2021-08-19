@@ -330,3 +330,58 @@ interface Todo {
       readonly [P in keyof T]: T[P]
   };
 ```
+11. 元组转换为对象
+
+```js
+const tuple = ['tesla', 'model 3', 'model X', 'model Y'] as const
+
+const result: TupleToObject<typeof tuple> // expected { tesla: 'tesla', 'model 3': 'model 3', 'model X': 'model X', 'model Y': 'model Y'}
+
+```
+答案：
+
+
+12. 实现Record
+
+答案：
+
+```js
+type MyRecord<T extends typeof any, U> = {
+  [K in T]: U
+}
+```
+
+13. 实现 Exclude
+
+把某个类型中，属于另一个的类型移除掉
+
+
+答案：
+
+```js
+// 如果T能够赋值给U类型的话，那么就会返回never类型，否则返回T类型
+// 实现的效果就是把T类型中的U类型给排除掉
+type Exclude<T, U> = T extends U ? never: T;
+
+```
+
+14. 去除所有never成员
+
+答案： 
+
+使用{}[keyof T] 把对象类型变成联合类型
+
+```js
+type OmitNever<T> = Pick<T, {
+    [K in keyof T]: T[K] extends never ? never : K
+}[keyof T]>
+
+type T123 = {
+    a: string,
+    b: never,
+    c: string,
+}
+
+type L = OmitNever<T123>;
+
+```

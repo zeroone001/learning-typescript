@@ -312,7 +312,7 @@ type T88 = GetRequired<{name: string, age: number, sex?: string}>
       completed: false,
   } */
 
-  interface Todo {
+  /* interface Todo {
     title: string
     description: string
   }
@@ -328,4 +328,53 @@ type T88 = GetRequired<{name: string, age: number, sex?: string}>
   
   todo.title = "Hello" // Error: cannot reassign a readonly property
   todo.description = "barFoo" // Error: cannot reassign a readonly property
+   */
+
+  const tuple34 = ['tesla', 'model 3', 'model X', 'model Y'] as const;
   
+  type TupleToObject<T> = {
+      [P in keyof T]: T[P]
+  };
+const result1: TupleToObject<typeof tuple34> = {
+    'tesla': 'tesla', 'model 3': 'model 3', 'model X': 'model X', 'model Y': 'model Y'
+}
+// expected { tesla: 'tesla', 'model 3': 'model 3', 'model X': 'model X', 'model Y': 'model Y'}
+
+/* function identity <T, U>(value: T, message: U) : T {
+    console.log(message);
+    return value;
+  } */
+  interface Length {
+      length: number
+  }
+  function identity<T extends Length>(arg: T): T {
+    console.log(arg.length); // Error, 这个地方需要给泛型约束
+    return arg;
+  }
+  function identity2<T>(arg: T[]): T[] {
+    console.log(arg.length); // Error, 这个地方需要给泛型约束
+    return arg;
+  }
+
+  function getProperty<T, K extends keyof T> (obj: T, key: K): T[K] {
+    return obj[key];
+  }
+
+// 去除所有never成员
+
+type OmitNever<T> = Pick<T, {
+    [K in keyof T]: T[K] extends never ? never : K
+}[keyof T]>
+
+type T123 = {
+    a: string,
+    b: never,
+    c: string,
+}
+
+// 这样可以做一个联合类型 |， 再使用Pick
+type OmitNeverHalf<T> = {[P in keyof T]: T[P] extends never ? never : P}[keyof T]
+
+type L = OmitNever<T123>;
+
+type L2 = OmitNeverHalf<T123>
