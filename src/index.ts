@@ -330,21 +330,22 @@ type T88 = GetRequired<{name: string, age: number, sex?: string}>
   todo.description = "barFoo" // Error: cannot reassign a readonly property
    */
 
-  const tuple34 = ['tesla', 'model 3', 'model X', 'model Y'] as const;
-  
-  type TupleToObject<T> = {
-      [P in keyof T]: T[P]
-  };
+/* const tuple34 = ['tesla', 'model 3', 'model X', 'model Y'] as const;
+
+type TupleToObject<T extends readonly any[]> = {
+    [Property in T[number]]: Property
+};
+
 const result1: TupleToObject<typeof tuple34> = {
     'tesla': 'tesla', 'model 3': 'model 3', 'model X': 'model X', 'model Y': 'model Y'
-}
+} */
 // expected { tesla: 'tesla', 'model 3': 'model 3', 'model X': 'model X', 'model Y': 'model Y'}
 
 /* function identity <T, U>(value: T, message: U) : T {
     console.log(message);
     return value;
   } */
-  interface Length {
+ /*  interface Length {
       length: number
   }
   function identity<T extends Length>(arg: T): T {
@@ -358,11 +359,11 @@ const result1: TupleToObject<typeof tuple34> = {
 
   function getProperty<T, K extends keyof T> (obj: T, key: K): T[K] {
     return obj[key];
-  }
+  } */
 
 // 去除所有never成员
 
-type OmitNever<T> = Pick<T, {
+/* type OmitNever<T> = Pick<T, {
     [K in keyof T]: T[K] extends never ? never : K
 }[keyof T]>
 
@@ -377,4 +378,40 @@ type OmitNeverHalf<T> = {[P in keyof T]: T[P] extends never ? never : P}[keyof T
 
 type L = OmitNever<T123>;
 
-type L2 = OmitNeverHalf<T123>
+type L2 = OmitNeverHalf<T123> */
+/* type arr1 = ['a', 'b', 'c']
+type arr2 = [3, 2, 1]
+
+type First<T extends any[]> = T[0] extends T[number] ? T[0] : never; 
+
+type head1 = First<arr1> // expected to be 'a'
+type head2 = First<arr2> // expected to be 3
+ */
+/* type tesla = ['tesla', 'model 3', 'model X', 'model Y']
+type spaceX = ['FALCON 9', 'FALCON HEAVY', 'DRAGON', 'STARSHIP', 'HUMAN SPACEFLIGHT']
+
+type Length<T extends any[]> = T['length'];
+
+type teslaLength = Length<tesla>  // expected 4
+type spaceXLength = Length<spaceX> // expected 5 */
+
+/* type TTuple = [string, number];
+
+type ElementOf<T> = T extends (infer R)[] ? R : never;
+
+type Union = ElementOf<TTuple>; // Union 类型为 string | number */
+
+/* type If1<C extends boolean, T, F> = C extends true ? T: F;
+type A = If1<true, 'a', 'b'>  // expected to be 'a'
+type B = If1<false, 'a', 'b'> // expected to be 'b' */
+/* type Concat<T extends any[], U extends any[]> = [...T, ...U];
+type Result = Concat<[1], [2]> // expected to be [1, 2] */
+
+type Includes1<T extends any[], U> = {
+    [K in T[number]]: true
+}[U] extends true ? true : false;
+
+type isPillarMen = Includes1<['Kars', 'Esidisi', 'Wamuu', 'Santana'], 'Sanana'> // expected to be `false`
+
+
+

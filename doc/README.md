@@ -340,6 +340,12 @@ const result: TupleToObject<typeof tuple> // expected { tesla: 'tesla', 'model 3
 ```
 答案：
 
+```js
+type TupleToObject<T extends readonly any[]> = {
+    [Property in T[number]]: Property
+};
+```
+
 
 12. 实现Record
 
@@ -384,4 +390,88 @@ type T123 = {
 
 type L = OmitNever<T123>;
 
+```
+
+15. 实现一个通用First<T>，它接受一个数组T并返回它的第一个元素的类型。
+
+```js
+type arr1 = ['a', 'b', 'c']
+type arr2 = [3, 2, 1]
+
+type head1 = First<arr1> // expected to be 'a'
+type head2 = First<arr2> // expected to be 3
+```
+
+答案：
+
+```js
+type First<T extends any[]> = T[0] extends T[number] ? T[0] : never; 
+```
+
+16. 对于给定的元组，您需要创建一个通用的Length，选择元组的长度
+
+```js
+type tesla = ['tesla', 'model 3', 'model X', 'model Y']
+type spaceX = ['FALCON 9', 'FALCON HEAVY', 'DRAGON', 'STARSHIP', 'HUMAN SPACEFLIGHT']
+
+type teslaLength = Length<tesla>  // expected 4
+type spaceXLength = Length<spaceX> // expected 5
+```
+
+答案：
+
+```js
+type Length<T extends any[]> = T['length'];
+```
+
+17. 元组转换为联合类型
+
+```js
+type TTuple = [string, number];
+type Union = ElementOf<TTuple>; // Union 类型为 string | number
+
+```
+答案： 
+
+```js
+type ElementOf<T> = T extends (infer R)[] ? R : never;
+```
+
+18. 实现一个工具 If，它接受条件C、true返回类型T和false返回类型F。C可以是true或false，而T和F可以是任何类型。
+
+```js
+type A = If<true, 'a', 'b'>  // expected to be 'a'
+type B = If<false, 'a', 'b'> // expected to be 'b'
+```
+答案：
+```js
+type If<C extends boolean, T, F> = C extends true ? T: F;
+```
+
+19. 在类型系统中实现JavaScript Array.concat函数。类型接受两个参数。输出应该是一个新的数组，其中包括ltr顺序的输入
+
+```js
+type Result = Concat<[1], [2]> // expected to be [1, 2]
+
+```
+
+答案:
+
+```js
+type Concat<T extends any[], U extends any[]> = [...T, ...U];
+```
+
+20. 
+
+```js
+type isPillarMen = Includes<['Kars', 'Esidisi', 'Wamuu', 'Santana'], 'Dio'> // expected to be `false`
+
+```
+
+答案：
+
+```js
+type Includes<T extends any[], U> = {
+    [K in T[number]]: true
+}[U] extends true ? true : false;
 ```

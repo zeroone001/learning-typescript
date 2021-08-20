@@ -1,8 +1,8 @@
-# learning-typescript
+# 我眼中的TypeScript
 
 学习TypeScript，知识学了的话，还是要总结起来的，下面是自己的一点总结，梳理一下
 
-我的GitHub仓库地址[]()
+我的GitHub仓库地址[https://github.com/zeroone001/learning-typescript](https://github.com/zeroone001/learning-typescript)
 
 
 ### 创建配置为文件
@@ -32,13 +32,53 @@ typeof 可以用来获取一个变量的声明类型
 
 交叉类型 &
 
+#### extends
+
+作用：
+
+* 扩展类型
+* 
+
+我们常见下面这种使用方式 `T extends U ? X : Y`
+
+特殊情况，当T为联合类型的时候
+
+`T extends U ? never : T` 找出T的差集
+`T extends U ? T : never` 找出T的交集
+
+#### infer
+
+在extends语句中，还支持infer关键字，可以推断一个类型变量，高效的对类型进行模式匹配
+
+经典例子
+
+```js
+type ReturnType<T> = T extends (...args: any[]) => infer R ? R : any;
+
+
+```
+
+```js
+type Response = Promise<number[]>;
+type Unpacked<T> = T extends Promise<infer R>? R : T;
+
+type resType = Unpacked<Response>; // resType 类型为number[]
+
+```
+
+infer 推断联合类型
+
+
+
 #### interface 与 type 区别
 
 参考资料： [https://juejin.cn/post/6844903749501059085](https://juejin.cn/post/6844903749501059085)
 
 相同点： 都可以描述一个对象或者函数；都允许拓展
 
-不同点： type 可以做很多骚操作，type 可以声明基本【类型别名】，【联合类型】，【元组】等类型
+不同点： 
+
+type 可以做很多骚操作，type 可以声明基本【类型别名】，【联合类型】，【元组】等类型
 interface 能够声明合并
 
 
