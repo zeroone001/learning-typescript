@@ -20,7 +20,7 @@ tsc --locale zh-CN
 * 可读性
 * 
 
-### 知识点
+## 知识点
 
 never类型： 代表永远不存在的值的类型，
 
@@ -32,12 +32,20 @@ typeof 可以用来获取一个变量的声明类型
 
 交叉类型 &
 
+
+### Everyday Types(日常类型)
+
+
+
+
+
 #### extends
 
 作用：
 
 * 扩展类型
-* 
+* 泛型约束
+* 类型判断与高阶类型
 
 我们常见下面这种使用方式 `T extends U ? X : Y`
 
@@ -45,6 +53,14 @@ typeof 可以用来获取一个变量的声明类型
 
 `T extends U ? never : T` 找出T的差集
 `T extends U ? T : never` 找出T的交集
+
+```js
+type Human = {    name: string;  }  type Duck = {    name: string;  }type Bool = Duck extends Human ? 'yes' : 'no'; // Bool => 'yes'
+```
+
+`A extends B` 指的是类型A可以分配给类型B，而不是类型A是类型B的子集
+
+[https://juejin.cn/post/6955816703431278628](https://juejin.cn/post/6955816703431278628)
 
 #### infer
 
@@ -126,7 +142,34 @@ T extends U ? X : Y
 
 泛型工具类型
 
+### Utility Types (实用类型)
 
+
+* Partial
+
+#### Record<keys, Type>
+
+```js
+interface CatInfo {
+  age: number;
+  breed: string;
+}
+ 
+type CatName = "miffy" | "boris" | "mordred";
+ 
+const cats: Record<CatName, CatInfo> = {
+  miffy: { age: 10, breed: "Persian" },
+  boris: { age: 5, breed: "Maine Coon" },
+  mordred: { age: 16, breed: "British Shorthair" },
+};
+````
+实现Record
+
+```js
+type MyRecord<T extends keyof any, U> = {
+    [P in T]: U
+}
+```
 
 
 
@@ -147,5 +190,6 @@ T extends U ? X : Y
 ### 参考资料
 
 1. [十道题目带你走进 TypeScript 世界](https://juejin.cn/post/6974713100826050591#heading-43)
+2. [一本书，深入理解TypeScript](https://jkchao.github.io/typescript-book-chinese/#why)
 
 

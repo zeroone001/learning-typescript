@@ -1,9 +1,10 @@
 ## 题目
 
-```js
-```
+题库： [https://github.com/type-challenges/type-challenges/blob/master/README.zh-CN.md](https://github.com/type-challenges/type-challenges/blob/master/README.zh-CN.md)
 
 0. 实现Pick
+
+注意，Pick 和 Omit的区别， Pick 是获取这几个key， Omit 是去除那几个key
 
 ```js
 interface Todo {
@@ -240,7 +241,7 @@ type Includes<T extends any[], K> = K extends T[number] ? true : false;
 
 ```
 
-7. 实现一个 MyReadOnly<T, K> ，K 应为 T 的属性集，若指定 K ，则将 T 中对应的属性修改成只读属性，若不指定 K ，则将所有属性变为只读属性
+7. 实现一个 MyReadOnly<T, K> ，K 应为 T 的属性集，若指定 K ，则将 T 中对应的属性修改成只读属性，若不指定 K ，则将所有属性变为只读属性 (经典中的经典)
 
 ```js
 interface Person {
@@ -475,3 +476,66 @@ type Includes<T extends any[], U> = {
     [K in T[number]]: true
 }[U] extends true ? true : false;
 ```
+
+21. 关于infer的经典题目，实现ReturnType 
+
+```js
+const fn = (v: boolean) => {
+  if (v)
+    return 1
+  else
+    return 2
+}
+
+
+type a = MyReturnType<typeof fn> // 应推导出 "1 | 2"
+```
+
+```js
+type MyReturnType<T> = T extends (...args: any) => infer R ? R : never;  
+
+```
+
+22. 不使用 Omit 实现 TypeScript 的 Omit<T, K> 范型。Omit 会创建一个省略 K 中字段的 T 对象。
+
+```js
+ interface Todo {
+    title: string
+    description: string
+    completed: boolean
+  }
+  type TodoPreview = MyOmit<Todo, 'description' | 'title'>;
+  
+  const todo1233: TodoPreview = {
+    completed: false,
+  }
+```
+
+答案：
+
+```js
+type MyOmit<T, K> = {
+    [P in Exclude<keyof T, K>]: T[P]
+};
+```
+
+23. 写一个deepReadonly
+
+```js
+type deepReadonly<T> = {
+      readonly [K in keyof T]: T[K] extends any[] | number | string | boolean | Function ? T[K] : deepReadonly<T[K]>
+  }
+
+```
+
+24. 元组转合集
+
+```js
+type TupleToUnion<T extends any[]> = T[number]
+```
+
+
+
+### 参考资料
+
+[https://github.com/type-challenges/type-challenges/blob/master/README.zh-CN.md](https://github.com/type-challenges/type-challenges/blob/master/README.zh-CN.md)

@@ -190,8 +190,11 @@ type T3 = Partial<Person3>;
 
 
 // Record 通常用来申明一个对象
+type MyRecord<T extends keyof any, U> = {
+    [P in T]: U
+}
 
-type T4 = Record<string, number>;
+type T4 = MyRecord<string, number>;
 
 let t4Text:T4 = {
     name: 312,
@@ -407,11 +410,106 @@ type B = If1<false, 'a', 'b'> // expected to be 'b' */
 /* type Concat<T extends any[], U extends any[]> = [...T, ...U];
 type Result = Concat<[1], [2]> // expected to be [1, 2] */
 
-type Includes1<T extends any[], U> = {
+/* type Includes1<T extends any[], U> = {
     [K in T[number]]: true
 }[U] extends true ? true : false;
 
-type isPillarMen = Includes1<['Kars', 'Esidisi', 'Wamuu', 'Santana'], 'Sanana'> // expected to be `false`
+type isPillarMen = Includes1<['Kars', 'Esidisi', 'Wamuu', 'Santana'], 'Sanana'> // expected to be `false` */
+
+/* const fn = (v: boolean) => {
+    if (v)
+      return 1
+    else
+      return 2
+  }
+
+  type MyReturnType<T> = T extends (...args: any) => infer R ? R : never;  
+  
+  type a = MyReturnType<typeof fn> // 应推导出 "1 | 2" */
+  
+  /* interface Todo {
+    title: string
+    description: string
+    completed: boolean
+  }
 
 
+  type MyOmit<T, K> = {
+      [P in Exclude<keyof T, K>]: T[P]
+  };
+  
+  type TodoPreview = MyOmit<Todo, 'description' | 'title'>;
+  
+  const todo1233: TodoPreview = {
+    completed: false,
+  } */
+
+ /*  interface Todo {
+    title: string
+    description: string
+    completed: boolean
+  }
+
+  type MyReadonly2<T, K extends keyof T = keyof T> = {
+    readonly [P in K]: T[P]
+  } & T;
+  
+  const todo: MyReadonly2<Todo, 'title' | 'description'> = {
+    title: "Hey",
+    description: "foobar",
+    completed: false,
+  }
+  
+  todo.title = "Hello" // Error: cannot reassign a readonly property
+  todo.description = "barFoo" // Error: cannot reassign a readonly property
+  todo.completed = true // OK */
+
+  /* type deepReadonly<T> = {
+      readonly [K in keyof T]: T[K] extends any[] | number | string | boolean | Function ? T[K] : deepReadonly<T[K]>
+  } */
+
+  /* type Arr = ['1', '2', '3']
+  type TupleToUnion<T extends any[]> = T[number];
+const aq2e: TupleToUnion<Arr> = '1' // expected to be '1' | '2' | '3' */
+ /*  type Human = {    name: string;    occupation: string;  }  
+type Duck = {    name: string; occupation: string; occupation1: string; }  
+type Bool = Duck extends Human ? 'yes' : 'no'; // Bool => 'no' */
+
+// 假设有一个这样的类型：
+interface initInterface {
+    count: number;
+    message: string;
+    asyncMethod<T, U>(input: Promise<T>): Promise<Action<U>>;
+    syncMethod<T, U>(action: Action<T>): Action<U>;
+  }
+  // 在经过 Connect 函数之后，返回值类型为
+  
+  type Result = {
+    asyncMethod<T, U>(input: T): Action<U>;
+    syncMethod<T, U>(action: T): Action<U>;
+  }
+  // 其中 Action<T> 的定义为：
+  interface Action<T> {
+    payload?: T
+    type: string
+  }
+  // 现在要求写出Connect的函数类型定义。
+
+  type RemoveFunctionTypes<T> = {
+      [K in keyof T]: T[K] extends Function ? K : never; 
+  }[keyof T]
+
+  type FunctionProps = RemoveFunctionTypes<initInterface>;
+
+  type PickFunction<T> = Pick<T, RemoveFunctionTypes<T>>;
+
+  type FunctionInterface = PickFunction<initInterface>;
+
+  type asyncMethod<T, U> = (input: Promise<T>) => Promise<Action<U>>;
+// type transformAsyncMethod<T,U> = (input: T) => Action<U>;
+
+  type transformAsyncMethod<T> = T extends (input: Promise<infer U>) => Promise<Action<infer S>> ? (input: U) => Action<S> : never;
+  
+  
+  
 
