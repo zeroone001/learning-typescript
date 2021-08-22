@@ -171,6 +171,33 @@ type MyRecord<T extends keyof any, U> = {
 }
 ```
 
+## 声明文件
+
+* interface 和 type 是不需要declare声明的，
+* declare 声明变量，函数，对象，类等
+* namespace 命名空间，声明对象
+
+#### 自定义声明文件 
+
+1. 全局库的自定义声明文件； 
+2. 模块化库的自定义声明文件；
+
+```js
+// 模块化库： 自定义声明文件
+// 1. 写一个第三方的库的声明文件，第一步先更改配置文件
+// 2. 新建包的文件夹，比如 types/jquery
+// 3. export, import 
+// 4. 假如并不需要import， 那么就不要写export， 直接 declare
+"baseUrl": "./",                             
+"paths": {
+  "*": ["types/*"]
+},   
+"esModuleInterop": true,   
+```
+
+#### 规范
+
+
 
 
 ### TS 题库
@@ -179,17 +206,20 @@ type MyRecord<T extends keyof any, U> = {
 
 ### TS 工具库
 
-解决自己手写的难题
+解决自己手写的难题，GitHub仓库
 
 * [ts-toolbelt](https://github.com/millsp/ts-toolbelt)
 * [utility-types](https://github.com/piotrwitek/utility-types)
 * [SimplyTyped](https://github.com/andnp/SimplyTyped)
+* [几乎排名前 90% 的 JavaScript 库的声明文件存在于 DefinitelyTyped 仓库里](https://github.com/DefinitelyTyped/DefinitelyTyped)
 
 
 
 ### 参考资料
 
-1. [十道题目带你走进 TypeScript 世界](https://juejin.cn/post/6974713100826050591#heading-43)
-2. [一本书，深入理解TypeScript](https://jkchao.github.io/typescript-book-chinese/#why)
+1. [十道题目带你走进 TypeScript 世界，掘金](https://juejin.cn/post/6974713100826050591#heading-43)
+2. [深入理解TypeScript，一本书](https://jkchao.github.io/typescript-book-chinese/#why)
+3. [声明文件，非常棒的讲解视频](https://www.bilibili.com/video/BV185411574h?p=2)
+4. [中文官网](https://www.tslang.cn/docs/home.html)
 
 

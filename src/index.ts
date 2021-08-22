@@ -476,7 +476,7 @@ type Duck = {    name: string; occupation: string; occupation1: strin
 type Bool = Duck extends Human ? 'yes' : 'no'; // Bool => 'no' */
 
 // 假设有一个这样的类型：
-interface initInterface {
+/* interface initInterface {
     count: number;
     message: string;
     asyncMethod<T, U>(input: Promise<T>): Promise<Action<U>>;
@@ -487,9 +487,9 @@ interface initInterface {
   type Result = {
     asyncMethod<T, U>(input: T): Action<U>;
     syncMethod<T, U>(action: T): Action<U>;
-  }
+  } */
   // 其中 Action<T> 的定义为：
-  interface Action<T> {
+ /*  interface Action<T> {
     payload?: T
     type: string
   }
@@ -510,6 +510,58 @@ interface initInterface {
 
   type transformAsyncMethod<T> = T extends (input: Promise<infer U>) => Promise<Action<infer S>> ? (input: U) => Action<S> : never;
   
-  
-  
+  type TransformMethod<T> = T extends (
+    input: Promise<infer U>
+  ) => Promise<Action<infer S>>
+    ? (input: U) => Action<S>
+    : T extends (action: Action<infer U>) => Action<infer S>
+    ? (action: U) => Action<S>
+    : never; */
 
+   /*  interface Action<T> {
+        payload?: T;
+        type: string;
+      }
+  
+    interface EffectModuleType {
+        count: number;
+        message: string;
+        asyncMethod<T, U>(input: Promise<T>): Promise<Action<U>>;
+        syncMethod<T, U>(action: Action<T>): Action<U>;
+    }
+
+    type removeNoFunction<T> = {
+        [P in keyof T]: T[P] extends Function ? P : never
+    }[keyof T]
+
+    type PPPP = removeNoFunction<EffectModuleType>;
+
+    type onlyFuncType<T> = Pick<T, removeNoFunction<T>>;
+
+    // type asyncMethod<T, U>(input: Promise<T>): Promise<Action<U>> 
+    // type asyncMethod<T, U>(input: T): Action<U> 
+
+    type transformAsyncMethod<T> = T extends (input: Promise<infer R>) =>  Promise<Action<infer M>> ? (input: R) => Action<M> : never;
+
+    // syncMethod<T, U>(action: Action<T>): Action<U>  变成了
+    // syncMethod<T, U>(action: T): Action<U>
+
+    type transformSyncMethod<T> = T extends (action: Action<infer R>) => Action<infer M> ? (action: R) => Action<M> : never;
+
+    type transformMethods<T> = T extends (input: Promise<infer R>) =>  Promise<Action<infer M>> ? (input: R) => Action<M> : T extends (action: Action<infer R>) => Action<infer M> ? (action: R) => Action<M> : never;
+ */
+
+    let arr1: Array<string | number> = ['q23',123, 32];
+
+    let objjjj: A = {
+        name: '312'
+    }
+
+    // abcd = 123;
+
+    function greet(greeting: number):void {
+        console.log(greeting);
+    }
+    greet('qwe');
+    
+    myLib.numberName = 123;
