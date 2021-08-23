@@ -33,11 +33,43 @@ typeof 可以用来获取一个变量的声明类型
 交叉类型 &
 
 
+
+
 ### Everyday Types(日常类型)
 
 
 
+### Enums (枚举)
 
+
+[官方文档](https://www.tslang.cn/docs/handbook/enums.html)
+
+* 本质就是个对象
+* 数字枚举, 如果有的值是表达式要放在最后面；
+* 字符串枚举, 如果是字符串的话，就丧失累加的特性了；含字符串成员的枚举当中，不允许使用计算值；
+* 不建议数字和字符串混合
+* 枚举可以认为是值，也可以是类型
+* 枚举的成员也可以作为类型
+
+```js
+// demo
+enum Direction {
+    Right = 1,
+    Up,
+    Left,
+    Down,
+}
+
+console.log(Direction.Right);
+// X 为 0
+enum E1 { X, Y, Z }
+
+//Enum 赋值完了就不存在了
+const enum Enum {
+    A = 1,
+    B = A * 2
+}
+```
 
 #### extends
 
@@ -142,7 +174,7 @@ T extends U ? X : Y
 
 泛型工具类型
 
-### Utility Types (实用类型)
+## Utility Types (实用类型)
 
 
 * Partial
@@ -171,6 +203,8 @@ type MyRecord<T extends keyof any, U> = {
 }
 ```
 
+
+
 ## 声明文件
 
 * interface 和 type 是不需要declare声明的，
@@ -193,6 +227,19 @@ type MyRecord<T extends keyof any, U> = {
   "*": ["types/*"]
 },   
 "esModuleInterop": true,   
+```
+
+```js
+declare module "a" {
+    export let a: number
+    export function b(): number
+    export namespace c{
+        let cd: string
+    }
+}
+
+// 使用
+import { a } from 'a';
 ```
 
 #### 规范
