@@ -5,9 +5,6 @@
 我的GitHub仓库地址[https://github.com/zeroone001/learning-typescript](https://github.com/zeroone001/learning-typescript)
 
 
-### 创建配置为文件
-
-
 
 ### 错误显示为中文
 
@@ -31,9 +28,6 @@ typeof 可以用来获取一个变量的声明类型
 联合类型 | 
 
 交叉类型 &
-
-
-
 
 ### Everyday Types(日常类型)
 
