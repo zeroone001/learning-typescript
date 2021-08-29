@@ -262,5 +262,5 @@ import { a } from 'a';
 2. [深入理解TypeScript，一本书](https://jkchao.github.io/typescript-book-chinese/#why)
 3. [声明文件，非常棒的讲解视频](https://www.bilibili.com/video/BV185411574h?p=2)
 4. [中文官网](https://www.tslang.cn/docs/home.html)
-
+5. [【大前端技能】TypeScript_从0到1完全解读，技能加分项](https://www.bilibili.com/video/BV1i541147NW?p=25&spm_id_from=pageDriver)
 
