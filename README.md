@@ -4,7 +4,13 @@
 
 我的GitHub仓库地址[https://github.com/zeroone001/learning-typescript](https://github.com/zeroone001/learning-typescript)
 
+### 参考资料
 
+1. [十道题目带你走进 TypeScript 世界，掘金](https://juejin.cn/post/6974713100826050591#heading-43)
+2. [深入理解TypeScript，一本书](https://jkchao.github.io/typescript-book-chinese/#why)
+3. [声明文件，非常棒的讲解视频](https://www.bilibili.com/video/BV185411574h?p=2)
+4. [中文官网](https://www.tslang.cn/docs/home.html)
+5. [大前端技能TypeScript_从0到1完全解读，技能加分项](https://www.bilibili.com/video/BV1i541147NW?p=25&spm_id_from=pageDriver)
 
 ### 错误显示为中文
 
@@ -33,7 +39,7 @@ typeof 可以用来获取一个变量的声明类型
 
 
 
-### Enums (枚举)
+## Enums (枚举)
 
 
 [官方文档](https://www.tslang.cn/docs/handbook/enums.html)
@@ -65,7 +71,7 @@ const enum Enum {
 }
 ```
 
-#### extends
+## extends
 
 作用：
 
@@ -88,7 +94,7 @@ type Human = {    name: string;  }  type Duck = {    name: s
 
 [https://juejin.cn/post/6955816703431278628](https://juejin.cn/post/6955816703431278628)
 
-#### infer
+## infer
 
 在extends语句中，还支持infer关键字，可以推断一个类型变量，高效的对类型进行模式匹配
 
@@ -112,7 +118,7 @@ infer 推断联合类型
 
 
 
-#### interface 与 type 区别
+## interface 与 type 区别
 
 参考资料： [https://juejin.cn/post/6844903749501059085](https://juejin.cn/post/6844903749501059085)
 
@@ -124,7 +130,7 @@ type 可以做很多骚操作，type 可以声明基本【类型别名】，【�
 interface 能够声明合并
 
 
-#### 泛型
+## 泛型
 
 [专门讲解泛型的文章](https://juejin.cn/post/6844904184894980104)
 
@@ -171,7 +177,7 @@ T extends U ? X : Y
 ## Utility Types (实用类型)
 
 
-* Partial
+* Partial 可以将类型中的所有属性变成可选属性
 
 #### Record<keys, Type>
 
@@ -256,11 +262,5 @@ import { a } from 'a';
 
 
 
-### 参考资料
 
-1. [十道题目带你走进 TypeScript 世界，掘金](https://juejin.cn/post/6974713100826050591#heading-43)
-2. [深入理解TypeScript，一本书](https://jkchao.github.io/typescript-book-chinese/#why)
-3. [声明文件，非常棒的讲解视频](https://www.bilibili.com/video/BV185411574h?p=2)
-4. [中文官网](https://www.tslang.cn/docs/home.html)
-5. [【大前端技能】TypeScript_从0到1完全解读，技能加分项](https://www.bilibili.com/video/BV1i541147NW?p=25&spm_id_from=pageDriver)
 
