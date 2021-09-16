@@ -1,4 +1,4 @@
-## TS 非基础类型的声明
+## TS DOM类型的声明
 
 lib.dom.d.ts
 
