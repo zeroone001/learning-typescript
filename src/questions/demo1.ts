@@ -1,4 +1,10 @@
 export {}
+
+/* 
+    题目来源：
+    https://mp.weixin.qq.com/s/YctoB0qkz5gqXlU3hoYt0g
+
+*/
 /* 第一题 */
 type User = {
     id: number;
