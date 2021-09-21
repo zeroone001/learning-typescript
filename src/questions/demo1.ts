@@ -51,16 +51,40 @@ f('a', 'b') // Ok
 /* 第三题 */
 
 // 如何定义一个 SetOptional 工具类型，
-// 支持把给定的 keys 对应的属性变成可选的？对应的使用示例如下所示：
+// 支持把给定的 keys 对应的属性变成可选的？
+// 对应的使用示例如下所示：
 
+/* 
+    分析一下，步骤
+    我们需要把传入的参数作为key，设置成可选参数
+    非参数，设置成不可选参数
+
+
+
+
+*/
 type Foo = {
-    a: number;
+    a?: number;
     b?: string;
     c: boolean;
 }
 
+// 对交叉类型进行扁平化处理
+type Simplify<T> = {
+    [P in keyof T]: T[P]
+}
+
+// Partial<Pick<T, K>>
+// Exclude 排除联合类型中的一部分
+type SetOptional<T, K extends keyof T> = Simplify<Partial<Pick<T, K>> & Pick<T, Exclude<keyof T, K>>> ;
+
+type SetRequired<T, K extends keyof T> = Simplify<Required<Pick<T, K>> & Pick<T, Exclude<keyof T, K>>>;
+
 // 测试用例
-type SomeOptional = SetOptional<Foo, 'a' | 'b'>;
+type SomeOptional = SetOptional<Foo, 'c' | 'b'>;
+// 设置可选参数是required
+type SomeRequired = SetRequired<Foo, 'b' | 'c'>;
+
 
    // type SomeOptional = {
    //  a?: number; // 该属性已变成可选的
