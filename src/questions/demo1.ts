@@ -76,7 +76,7 @@ type Simplify<T> = {
 
 // Partial<Pick<T, K>>
 // Exclude 排除联合类型中的一部分
-type SetOptional<T, K extends keyof T> = Simplify<Partial<Pick<T, K>> & Pick<T, Exclude<keyof T, K>>> ;
+type SetOptional<T, K extends keyof T> = Simplify<Partial<Pick<T, K>> & Pick<T, Exclude<keyof T, K>>>;
 
 type SetRequired<T, K extends keyof T> = Simplify<Required<Pick<T, K>> & Pick<T, Exclude<keyof T, K>>>;
 
@@ -86,9 +86,50 @@ type SomeOptional = SetOptional<Foo, 'c' | 'b'>;
 type SomeRequired = SetRequired<Foo, 'b' | 'c'>;
 
 
-   // type SomeOptional = {
-   //  a?: number; // 该属性已变成可选的
-   //  b?: string; // 保持不变
-   //  c: boolean; 
-   // }
+// type SomeOptional = {
+//  a?: number; // 该属性已变成可选的
+//  b?: string; // 保持不变
+//  c: boolean; 
+// }
 
+/* 第四题 */
+
+// 如何定义一个 ConditionalPick 工具类型，
+// 支持根据指定的 Condition 条件来生成新的类型，对应的使用示例如下：
+
+/* 
+    分析一波：
+
+*/
+
+interface Example {
+    a: string;
+    b: string | number;
+    c: () => void;
+    d: {};
+}
+
+// 把复合条件的key 找出来
+type ConditionalKeys<T, Condition> = {
+    [K in keyof T]: T[K] extends Condition ? K : never
+}[keyof T]
+
+// Pick<T, ConditionalKeys<T, Condition>>
+type ConditionalPick<T, Condition> = Pick<T, ConditionalKeys<T, Condition>>;
+// 测试用例：
+type StringKeysOnly = ConditionalPick<Example, string>;
+   //=> {a: string}
+
+/* 第五题 */
+
+
+// 定义一个工具类型 AppendArgument，为已有的函数类型增加指定类型的参数，
+// 新增的参数名是 x，将作为新函数类型的第一个参数。具体的使用示例如下所示：
+
+type Fn = (a: number, b: string) => number
+// 实现
+type AppendArgument<F, A> = F extends (...args: infer Args) => infer Return ? 
+(x: A, ...args: Args) => Return : never
+
+type FinalFn = AppendArgument<Fn, boolean> 
+// (x: boolean, a: number, b: string) => number
