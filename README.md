@@ -202,7 +202,7 @@ type MyRecord<T extends keyof any, U> = {
 - declare 声明变量，函数，对象，类等
 - namespace 命名空间，声明对象
 
-#### 自定义声明文件
+### 自定义声明文件
 
 1. 全局库的自定义声明文件；
 2. 模块化库的自定义声明文件；
@@ -233,7 +233,29 @@ declare module "a" {
 import { a } from 'a';
 ```
 
-#### 规范
+### ! 非空断言
+
+```js
+let a!;
+
+a = '1';
+```
+
+### as 断言 Using type predicates
+
+```js
+function isFish(pet: Fish | Bird): pet is Fish {
+  return (pet as Fish).swim !== undefined;
+}
+```
+
+
+
+
+
+
+
+### 规范
 
 ## ts-node
 
