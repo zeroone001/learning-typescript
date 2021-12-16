@@ -1,16 +1,5 @@
-# 我眼中的 TypeScript
+# TypeScript
 
-学习 TypeScript，知识学了的话，还是要总结起来的，下面是自己的一点总结，梳理一下
-
-我的 GitHub 仓库地址[https://github.com/zeroone001/learning-typescript](https://github.com/zeroone001/learning-typescript)
-
-### 参考资料
-
-1. [十道题目带你走进 TypeScript 世界，掘金](https://juejin.cn/post/6974713100826050591#heading-43)
-2. [深入理解 TypeScript，一本书](https://jkchao.github.io/typescript-book-chinese/#why)
-3. [声明文件，非常棒的讲解视频](https://www.bilibili.com/video/BV185411574h?p=2)
-4. [TS 中文官网](https://www.tslang.cn/docs/home.html)
-5. [大前端技能 TypeScript\_从 0 到 1 完全解读，技能加分项](https://www.bilibili.com/video/BV1i541147NW?p=25&spm_id_from=pageDriver)
 
 ### 错误显示为中文
 
@@ -235,6 +224,8 @@ import { a } from 'a';
 
 ### ! 非空断言
 
+http://www.semlinker.com/ts-non-null-assertion-operator/
+
 ```js
 let a!;
 
@@ -254,10 +245,18 @@ function isFish(pet: Fish | Bird): pet is Fish {
 https://www.typescriptlang.org/docs/handbook/utility-types.html#excludetype-excludedunion
 
 
+### 函数重载
+
+https://www.typescriptlang.org/docs/handbook/2/functions.html#function-overloads
+
+关于函数重载，必须要把精确的定义放在前面，最后函数实现时，需要使用 |操作符或者?操作符，把所有可能的输入类型全部包含进去，以具体实现
 
 
 
-### 规范
+
+
+
+
 
 ## ts-node
 
@@ -276,3 +275,11 @@ https://www.typescriptlang.org/docs/handbook/utility-types.html#excludetype-excl
 - [utility-types](https://github.com/piotrwitek/utility-types)
 - [SimplyTyped](https://github.com/andnp/SimplyTyped)
 - [几乎排名前 90% 的 JavaScript 库的声明文件存在于 DefinitelyTyped 仓库里](https://github.com/DefinitelyTyped/DefinitelyTyped)
+
+### 参考资料
+
+1. [十道题目带你走进 TypeScript 世界，掘金](https://juejin.cn/post/6974713100826050591#heading-43)
+2. [深入理解 TypeScript，一本书](https://jkchao.github.io/typescript-book-chinese/#why)
+3. [声明文件，非常棒的讲解视频](https://www.bilibili.com/video/BV185411574h?p=2)
+4. [TS 中文官网](https://www.tslang.cn/docs/home.html)
+5. [大前端技能 TypeScript\_从 0 到 1 完全解读，技能加分项](https://www.bilibili.com/video/BV1i541147NW?p=25&spm_id_from=pageDriver)
