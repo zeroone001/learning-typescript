@@ -252,7 +252,13 @@ https://www.typescriptlang.org/docs/handbook/2/functions.html#function-overloads
 关于函数重载，必须要把精确的定义放在前面，最后函数实现时，需要使用 |操作符或者?操作符，把所有可能的输入类型全部包含进去，以具体实现
 
 
+### 泛型
 
+```ts
+export function swap<T1, T2>(v1: T1, v2: T2): [T2, T1] {
+    return [v2, v1];
+}
+```
 
 
 
