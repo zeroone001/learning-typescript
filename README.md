@@ -2,9 +2,6 @@
 
 ## 笔记
 
-```js
-
-```
 ## Declare functions
 
 ```js
@@ -258,7 +255,7 @@ infer 推断联合类型
 type 可以做很多骚操作，type 可以声明基本【类型别名】，【联合类型】，【元组】等类型
 interface 能够声明合并
 
-## 泛型
+## 泛型 T
 
 [专门讲解泛型的文章](https://juejin.cn/post/6844904184894980104)
 
@@ -281,11 +278,32 @@ interface 能够声明合并
 function getProperty<T, K extends keyof T> (obj: T, key: K): T[K] {
     return obj[key];
 }
-```
 
-泛型参数默认类型
+/* base 
+  下面代表指定了一个泛型，也可以指定两个 <T, K>
+*/
+function myFunction<T>(a: T): T {
+  return a;
+}
+myFunction(10); // 不指定，可以自动推断
+myFunction<string>('str'); // 指定泛型
 
-```js
+/* 跟 interface 结合
+  T是Person的子类
+ */
+interface Person {
+  name: string
+}
+function myFun<T extends Person>(a: T): string {
+  return a.name;
+}
+/* 可以同时指定多个 */
+function myFunction<T, K>(a: T, b: K): T {
+  return a;
+}
+/* 
+  泛型用到了接口上
+泛型参数默认类型 */
 interface Afun<T = string> {
   name: T;
 }
@@ -296,16 +314,15 @@ interface Afun<T = string> {
 ```js
 // 下面这句话的意思是，如果T能够赋值给U，那么就返回X 否则就是Y
 T extends U ? X : Y
-
 ```
 
-泛型工具类型
 
-## Utility Types (实用类型)
+
+## Utility Types (实用类型) 泛型工具类型
 
 - Partial 可以将类型中的所有属性变成可选属性
 
-#### Record<keys, Type>
+### Record<keys, Type>
 
 ```js
 interface CatInfo {
