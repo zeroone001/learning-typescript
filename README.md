@@ -89,8 +89,60 @@ class className implements interfaceName {
       this.someProperty = x;
    }
 }
+
+/* class + function */
+interface Panthera {
+   roar: string;
+}
+
+class Tiger implements Panthera {
+   roar: string;
+
+   constructor() {
+      this.roar = 'rooooaaaarrrr';
+   }
+}
+
+class Lion implements Panthera {
+   roar: string;
+
+   constructor() {
+      this.roar = 'ROOOOAAAAARRRRRR';
+   }
+}
+
+function pantheraSounds(panthera: Panthera): void {
+   console.log(`Panthera says ${panthera.roar}`);
+}
+
+let tiger = new Tiger();
+let lion = new Lion();
+
+pantheraSounds(tiger);
+pantheraSounds(lion);
+
+/* optional parameters */
+interface giraffeTwo = {
+     species: string;
+     name: string;
+     weight?: number;
+     age: number;
+     diet: string;
+};
+/* export  */
+export class className {
+   // properties and methods
+}
+import { className } from 'relativefilepath';
+
+let newClass = new className;
 ```
 
+## compile TS
+
+```js
+npm install -g typescript
+```
 
 ### 错误显示为中文
 
