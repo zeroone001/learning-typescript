@@ -1,9 +1,102 @@
 # TypeScript
 
+## 笔记
+
+```js
+
+```
+## Declare functions
+
+```js
+function myFunction(x: number): number {
+  return x + 2;
+}
+/* void */
+let y: number = 0;
+
+function myFunction(x: number): void {
+   y = x*2;
+}
+
+/* 匿名函数 */
+const myFunction = function (x: number):number {
+return x + 2;
+}
+/* Optional Parameter */
+function myFunction(a: number, b?:number): number {
+  if (typeof b !== 'undefined'){
+    return a+b+5;
+  } else {
+    return a+5;
+  }
+}
+```
+
+## Classes
+
+```js
+class Astronaut {
+   name: string;
+   constructor(firstName: string, lastName: string) {
+      this.name = firstName + " " + lastName;
+   }
+   greet() {
+      return "Hello, " + this.name;
+   }
+}
+
+let Bob = new Astronaut("Bob","Smith");
+
+/* extends */
+class Panthera {
+   roar: string;
+   constructor(currentRoar: string) {
+      this.roar = currentRoar;
+   }
+}
+
+class Tiger extends Panthera {
+   stripes: boolean = true;
+
+}
+
+let tigger = new Tiger("loud");
+console.log(tigger.roar);
+console.log(tigger.stripes);
+```
+
+## interface
+
+```js
+interface Astronaut {
+   name: string;
+}
+
+function astronautName (astronaut: Astronaut): string {
+   return astronaut.name;
+}
+
+let bob = {name: "Bob"};
+console.log(astronautName(bob));
+
+/* class implements */
+interface interfaceName {
+   someProperty: number;
+}
+
+class className implements interfaceName {
+   constructor(x: number) {
+      this.someProperty = x;
+   }
+}
+```
+
 
 ### 错误显示为中文
 
-tsc --locale zh-CN
+命令
+
+`tsc --locale zh-CN`
 
 ### 说一下优点和缺点
 

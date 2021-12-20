@@ -551,17 +551,20 @@ type Bool = Duck extends Human ? 'yes' : 'no'; // Bool => 'no' */
     type transformMethods<T> = T extends (input: Promise<infer R>) =>  Promise<Action<infer M>> ? (input: R) => Action<M> : T extends (action: Action<infer R>) => Action<infer M> ? (action: R) => Action<M> : never;
  */
 
-    let arr1: Array<string | number> = ['q23',123, 32];
+// let arr1: Array<string | number> = ['q23',123, 32];
 
-    let objjjj: A = {
-        name: '312'
-    }
+// let objjjj: A = {
+//     name: '312'
+// }
 
-    // abcd = 123;
+// // abcd = 123;
 
-    function greet(greeting: number):void {
-        console.log(greeting);
-    }
-    greet('qwe');
+// function greet(greeting: number):void {
+//     console.log(greeting);
+// }
+// greet('qwe');
+
+// myLib.numberName = 123;
+
+
     
-    myLib.numberName = 123;
