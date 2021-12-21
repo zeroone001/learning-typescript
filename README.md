@@ -422,9 +422,72 @@ export function swap<T1, T2>(v1: T1, v2: T2): [T2, T1] {
 }
 ```
 
+## 减少重复代码
 
+http://www.semlinker.com/effective-ts-tips/
 
+```js
+/* 一 */
+interface Person {
+  firstName: string;
+  lastName: string;
+}
+interface PersonWithBirthDate extends Person { 
+  birth: Date;
+}
+type PersonWithBirthDate = Person & { birth: Date };
 
+/* 二，typeof */
+const INIT_OPTIONS = {
+  width: 640,
+  height: 480,
+  color: "#00FF00",
+  label: "VGA",
+};
+/* 1 */
+interface Options {
+  width: number;
+  height: number;
+  color: string;
+  label: string;
+}
+
+/* 2，也可以换一种方式
+也可以使用 typeof 操作符来快速获取配置对象的「形状」
+*/
+type Options = typeof INIT_OPTIONS;
+
+/* 三，重复类型 */
+interface SaveAction { 
+  type: 'save';
+  // ...
+}
+
+interface LoadAction {
+  type: 'load';
+  // ...
+}
+
+type Action = SaveAction | LoadAction;
+type ActionType = 'save' | 'load'; // Repeated types!
+// ActionType 可以改为
+type ActionType = Action['type'];
+
+/* 四，重复函数 */
+function get(url: string, opts: Options): Promise<Response> { /* ... */ } 
+function post(url: string, opts: Options): Promise<Response> { /* ... */ }
+// 提取统一的类型签名
+type HTTPFunction = (url: string, opts: Options) => Promise<Response>;
+
+const get: HTTPFunction = (url, opts) => {};
+const post: HTTPFunction = (url, opts) => {};
+```
+
+## 使用更精确的类型替代字符串类型
+
+```js
+
+```
 
 ## ts-node
 
