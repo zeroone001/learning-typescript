@@ -68,6 +68,96 @@ let value7: any[] = value; // Error
 let value8: Function = value; // Error
 ```
 
+### tuple 元组
+
+```js
+let tupleType: [string, boolean];
+tupleType = ["semlinker", true];
+```
+
+### void
+
+void 类型， 表示没有任何类型
+
+声明一个 void 类型的变量没有什么作用，因为它的值只能为 undefined 或 null
+
+```js
+// 声明函数返回值为void
+function warnUser(): void {
+  console.log("This is my warning message");
+}
+```
+
+### null & undefined
+
+```js
+let u: undefined = undefined;
+let n: null = null;
+```
+
+### object, Object 和 {} 类型
+
+object 类型，表示非原始类型
+
+```js
+// node_modules/typescript/lib/lib.es5.d.ts
+interface ObjectConstructor {
+  create(o: object | null): any;
+  // ...
+}
+
+const proto = {};
+
+Object.create(proto);     // OK
+Object.create(null);      // OK
+Object.create(undefined); // Error
+Object.create(1337);      // Error
+Object.create(true);      // Error
+Object.create("oops");    // Error
+```
+Object 类型：它是所有 Object 类的实例的类型
+
+{} 类型描述了一个没有成员的对象。当你试图访问这样一个对象的任意属性时，TypeScript 会产生一个编译时错误
+
+```js
+// Type {}
+const obj = {};
+
+// Error: Property 'prop' does not exist on type '{}'.
+obj.prop = "semlinker";
+```
+
+### never
+
+never 类型表示的是那些永不存在的值的类型
+
+使用 never 避免出现新增了联合类型没有对应的实现，
+目的就是写出类型绝对安全的代码。
+
+```js
+// 返回never的函数必须存在无法达到的终点
+function error(message: string): never {
+  throw new Error(message);
+}
+
+function infiniteLoop(): never {
+  while (true) {}
+}
+/* 2 */
+type Foo = string | number;
+
+function controlFlowAnalysisWithNever(foo: Foo) {
+  if (typeof foo === "string") {
+    // 这里 foo 被收窄为 string 类型
+  } else if (typeof foo === "number") {
+    // 这里 foo 被收窄为 number 类型
+  } else {
+    // foo 在这里是 never
+    const check: never = foo;
+  }
+}
+```
+
 ## Declare functions
 
 ```js
