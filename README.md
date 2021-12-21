@@ -486,7 +486,25 @@ const post: HTTPFunction = (url, opts) => {};
 ## 使用更精确的类型替代字符串类型
 
 ```js
-
+interface Album {
+  artist: string; // 艺术家
+  title: string; // 专辑标题
+  releaseDate: Date; // 发行日期：YYYY-MM-DD 
+  recordingType: "studio" | "live"; // 录制类型："live" 或 "studio"
+}
+/* 二 设置函数的参数类型 */
+// 
+function pluck(record: any[], key: string): any[] {
+  return record.map((r) => r[key]);
+}
+// 优化
+function pluck<T>(record: T[], key: keyof T): T[keyof T][] {
+  return record.map((r) => r[key]);
+}
+// 继续优化
+function pluck<T, K extends keyof T>(record: T[], key: K): T[K][] {
+   return record.map((r) => r[key]);
+}
 ```
 
 ## ts-node
