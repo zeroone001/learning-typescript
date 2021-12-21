@@ -1,9 +1,5 @@
 # TypeScript
 
-## 知识点
-
-never 类型： 代表永远不存在的值的类型，
-
 接口： interface 在 TS 里面至关重要，用来规范类型，描述对象和类的具体结构
 
 typeof 可以用来获取一个变量的声明类型
@@ -11,6 +7,40 @@ typeof 可以用来获取一个变量的声明类型
 联合类型 |
 
 交叉类型 &
+
+## 基础类型
+
+### never
+
+never 类型： 代表永远不存在的值的类型，
+
+### enum 枚举类型
+
+NORTH
+```js
+enum Direction {
+  NORTH,
+  SOUTH,
+  EAST,
+  WEST,
+}
+let dir: Direction = Direction.NORTH;
+/* 反向映射 */
+enum Direction {
+  NORTH,
+  SOUTH,
+  EAST,
+  WEST,
+}
+
+let dirName = Direction[0]; // NORTH
+let dirVal = Direction["NORTH"]; // 0
+```
+
+### unknow 类型
+
+
+
 ## Declare functions
 
 ```js

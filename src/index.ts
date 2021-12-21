@@ -585,3 +585,11 @@ interface Point1 {
 const pt = {} as Point1;
 pt.x = 3;
 pt.y = 4;
+
+enum Direction {
+  NORTH,
+  SOUTH,
+  EAST,
+  WEST,
+}
+let dir: Direction = Direction.NORTH;
