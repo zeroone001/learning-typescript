@@ -567,4 +567,21 @@ type Bool = Duck extends Human ? 'yes' : 'no'; // Bool => 'no' */
 // myLib.numberName = 123;
 
 
-    
+function double<T extends number | string>(x: T): T extends string ? string : number;
+function double(x: any) {
+  return x + x;
+}
+
+// const num: 10
+const num = double(10);
+// const str: "ts"
+const str = double('ts');
+console.log(str);
+
+interface Point1 {
+  x: number;
+  y: number;
+}
+const pt = {} as Point1;
+pt.x = 3;
+pt.y = 4;

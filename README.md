@@ -1,7 +1,16 @@
 # TypeScript
 
-## 笔记
+## 知识点
 
+never 类型： 代表永远不存在的值的类型，
+
+接口： interface 在 TS 里面至关重要，用来规范类型，描述对象和类的具体结构
+
+typeof 可以用来获取一个变量的声明类型
+
+联合类型 |
+
+交叉类型 &
 ## Declare functions
 
 ```js
@@ -154,17 +163,7 @@ npm install -g typescript
 - 可读性
 -
 
-## 知识点
 
-never 类型： 代表永远不存在的值的类型，
-
-接口： interface 在 TS 里面至关重要，用来规范类型，描述对象和类的具体结构
-
-typeof 可以用来获取一个变量的声明类型
-
-联合类型 |
-
-交叉类型 &
 
 ### Everyday Types(日常类型)
 
@@ -506,6 +505,104 @@ function pluck<T, K extends keyof T>(record: T[], key: K): T[K][] {
    return record.map((r) => r[key]);
 }
 ```
+
+## 定义的类型总是表示有效的状态
+
+```js
+interface RequestPending {
+  state: "pending";
+}
+
+interface RequestError {
+  state: "error";
+  errorMsg: string;
+}
+
+interface RequestSuccess {
+  state: "ok";
+  pageContent: string;
+}
+
+type RequestState = RequestPending | RequestError | RequestSuccess;
+
+interface State {
+  currentPage: string;
+  requests: { [page: string]: RequestState };
+}
+
+function renderPage(state: State) {
+  const { currentPage } = state;
+  const requestState = state.requests[currentPage];
+  switch (requestState.state) {
+    case "pending":
+      return `页面加载中~~~`;
+    case "error":
+      return `呜呜呜，加载第${currentPage}页出现异常了...${requestState.errorMsg}`;
+    case "ok":
+      `<div>第${currentPage}页的内容：${requestState.pageContent}</div>`;
+  }
+}
+```
+
+## 选择条件类型而不是重载声明
+
+```js
+function double(x: number | string): number | string;
+function double(x: any) {
+  return x + x;
+}
+// 优化
+function double<T extends number | string>(x: T): T;
+function double(x: any) {
+  return x + x;
+}
+// 继续优化 使用条件类型
+function double<T extends number | string>(x: T): T extends string ? string : number {
+   return x + x;
+}
+```
+
+## 字符串字面量类型
+
+```js
+/* CardinalDirection 字符串字面量类型 */
+type CardinalDirection = 'North' | 'East' | 'South' | 'West';
+
+function move(distance: number, direction: CardinalDirection) {
+  // ...
+}
+
+move(1, 'North'); // ok
+move(1, 'Nurth'); // Error
+```
+
+## 一次性创建对象
+
+```js
+/* 建议一次性创建对象，
+   如果，想要一步步的创建对象怎么办呐， 
+   使用类型断言 as
+*/
+interface Point {
+   x: number;
+   y: number;
+}
+const pt = {} as Point;
+pt.x = 3;
+pt.y = 4;
+/* 二 */
+const pt = { x: 3, y: 4 };
+const id = { name: "Pythagoras" };
+const namedPoint = {};
+Object.assign(namedPoint, pt, id);
+
+// Property 'id' does not exist on type '{}'.(2339)
+namedPoint.name; // Error
+// 使用展开运算符来解决
+const namedPoint = {...pt, ...id};
+namedPoint.name; // OK, type is string
+```
+
 
 ## ts-node
 
