@@ -228,11 +228,56 @@ let five_array = [...two_array, 2, 3, 4];
 ## Classes 类
 
 在面向对象语言中，类是一种面向对象计算机编程语言的构造，是创建对象的蓝图，
-描述了所创建的对象共同的属性和方法。
-
-
+描述了所创建的对象共同的属性和方法
 
 ```js
+/* 1 */
+class Greeter {
+  // 静态属性
+  static cname: string = "Greeter";
+  // 成员属性
+  greeting: string;
+
+  // 构造函数 - 执行初始化操作
+  constructor(message: string) {
+    this.greeting = message;
+  }
+
+  // 静态方法
+  static getClassName() {
+    return "Class name is Greeter";
+  }
+
+  // 成员方法
+  greet() {
+    return "Hello, " + this.greeting;
+  }
+}
+
+let greeter = new Greeter("world");
+
+// 编译之后的如下
+
+"use strict";
+var Greeter = /** @class */ (function () {
+    // 构造函数 - 执行初始化操作
+    function Greeter(message) {
+      this.greeting = message;
+    }
+    // 静态方法
+    Greeter.getClassName = function () {
+      return "Class name is Greeter";
+    };
+    // 成员方法
+    Greeter.prototype.greet = function () {
+      return "Hello, " + this.greeting;
+    };
+    // 静态属性
+    Greeter.cname = "Greeter";
+    return Greeter;
+}());
+var greeter = new Greeter("world");
+/* 2 */
 class Astronaut {
    name: string;
    constructor(firstName: string, lastName: string) {
