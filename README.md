@@ -4,7 +4,6 @@
 
 typeof 可以用来获取一个变量的声明类型
 
-联合类型 |
 
 交叉类型 &
 
@@ -748,6 +747,38 @@ const namedPoint = {...pt, ...id};
 namedPoint.name; // OK, type is string
 ```
 
+## 联合类型 | 和 类型别名
+
+```js
+/* 联合类型 */
+const myFun = (name: string | undefined) => {
+
+}
+/* 'lala' 字面量类型 */
+type Name = 'lala' | 'hahah' | 'aaa';
+/* 可辨识 */
+interface Motorcycle {
+  vType: "motorcycle"; // 可辨识属性
+  make: number; // year
+}
+/* 类型守卫 */
+// 使用 switch 和 case 运算符来实现类型守卫
+function evaluatePrice(vehicle: Vehicle) {
+  switch(vehicle.vType) {
+    case "car":
+      return vehicle.transmission * EVALUATION_FACTOR;
+    case "truck":
+      return vehicle.capacity * EVALUATION_FACTOR;
+    case "motorcycle":
+      return vehicle.make * EVALUATION_FACTOR;
+  }
+}
+/* 类型别名 */
+type Message = string | string[];
+let greet = (message: Message) => {
+  // ...
+};
+```
 
 ## ts-node
 
