@@ -1,11 +1,14 @@
 # TypeScript
 
-接口： interface 在 TS 里面至关重要，用来规范类型，描述对象和类的具体结构
-
-typeof 可以用来获取一个变量的声明类型
 
 
 交叉类型 &
+
+## compile TS
+
+```js
+npm install -g typescript
+```
 
 ## 基础类型
 
@@ -152,6 +155,139 @@ function controlFlowAnalysisWithNever(foo: Foo) {
     // foo 在这里是 never
     const check: never = foo;
   }
+}
+```
+
+## TS 断言 Assertion
+
+```ts
+let cid: any = 1;
+let customId = cid as number;
+let customId = <number>cid;
+/* 尖括号语法 */
+let someValue: any = "this is a string";
+let strLength: number = (<string>someValue).length;
+/* as 语法 */
+let someValue: any = "this is a string";
+let strLength: number = (someValue as string).length;
+```
+
+### 非空断言 !
+
+具体而言，x! 将从 x 值域中排除 null 和 undefined 
+
+```ts
+function myFunc(maybeString: string | undefined | null) {
+  // Type 'string | null | undefined' is not assignable to type 'string'.
+  // Type 'undefined' is not assignable to type 'string'. 
+  const onlyString: string = maybeString; // Error
+  const ignoreUndefinedAndNull: string = maybeString!; // Ok 在后面加叹号
+}
+/* 调用函数时候，忽略 */
+type NumGenerator = () => number;
+
+function myFunc(numGenerator: NumGenerator | undefined) {
+  // Object is possibly 'undefined'.(2532)
+  // Cannot invoke an object which is possibly 'undefined'.(2722)
+  const num1 = numGenerator(); // Error
+  const num2 = numGenerator!(); //OK
+}
+/* 确定赋值断言 */
+let x!: number; /* 就在这里加一个叹号，就不会报错了 */
+initialize();
+// Variable 'x' is used before being assigned.(2454)
+console.log(2 * x); // Error
+
+function initialize() {
+  x = 10;
+}
+```
+
+## 类型守卫
+
+类型保护是可执行运行时检查的一种表达式，用于确保该类型在一定的范围内。
+
+### in 关键字
+
+```ts
+interface Admin {
+  name: string;
+  privileges: string[];
+}
+
+interface Employee {
+  name: string;
+  startDate: Date;
+}
+
+type UnknownEmployee = Employee | Admin;
+
+function printEmployeeInformation(emp: UnknownEmployee) {
+  console.log("Name: " + emp.name);
+  if ("privileges" in emp) {
+    console.log("Privileges: " + emp.privileges);
+  }
+  if ("startDate" in emp) {
+    console.log("Start Date: " + emp.startDate);
+  }
+}
+```
+
+### typeof 关键字
+
+typeof 可以用来获取一个变量的声明类型
+
+typeof 类型保护只支持两种形式：typeof v === "typename" 和 typeof v !== typename，"typename" 必须是 "number"， "string"， "boolean" 或 "symbol"
+
+```ts
+function padLeft(value: string, padding: string | number) {
+  if (typeof padding === "number") {
+      return Array(padding + 1).join(" ") + value;
+  }
+  if (typeof padding === "string") {
+      return padding + value;
+  }
+  throw new Error(`Expected string or number, got '${padding}'.`);
+}
+```
+
+### instanceof 关键字
+
+```js
+interface Padder {
+  getPaddingString(): string;
+}
+
+class SpaceRepeatingPadder implements Padder {
+  constructor(private numSpaces: number) {}
+  getPaddingString() {
+    return Array(this.numSpaces + 1).join(" ");
+  }
+}
+
+class StringPadder implements Padder {
+  constructor(private value: string) {}
+  getPaddingString() {
+    return this.value;
+  }
+}
+
+let padder: Padder = new SpaceRepeatingPadder(6);
+
+if (padder instanceof SpaceRepeatingPadder) {
+  // padder的类型收窄为 'SpaceRepeatingPadder'
+}
+```
+
+### 自定义类型保护的类型谓词
+
+```ts
+function isNumber(x: any): x is number {
+  return typeof x === "number";
+}
+
+function isString(x: any): x is string {
+  return typeof x === "string";
 }
 ```
 
@@ -312,6 +448,8 @@ console.log(tigger.stripes);
 
 接口和类型别名，都可以用来描述对象的形状或者函数签名
 
+接口： interface 在 TS 里面至关重要，用来规范类型，描述对象和类的具体结构
+
 ```js
 /* 用来描述函数 */
 interface SetPoint {
@@ -402,12 +540,6 @@ type Name = {
 type Name = People | Student;
 /* tuple */
 type Name = [string, number];
-```
-
-## compile TS
-
-```js
-npm install -g typescript
 ```
 
 ### 错误显示为中文
@@ -1002,11 +1134,11 @@ console.log('abc:', abc);
 请求的使用库： superagent
 获取页面中的内容： cheerio
 
-### TS 题库
+## TS 题库
 
 [https://github.com/type-challenges/type-challenges/blob/master/README.zh-CN.md](https://github.com/type-challenges/type-challenges/blob/master/README.zh-CN.md)
 
-### TS 工具库
+## TS 工具库
 
 解决自己手写的难题，GitHub 仓库
 
@@ -1015,10 +1147,11 @@ console.log('abc:', abc);
 - [SimplyTyped](https://github.com/andnp/SimplyTyped)
 - [几乎排名前 90% 的 JavaScript 库的声明文件存在于 DefinitelyTyped 仓库里](https://github.com/DefinitelyTyped/DefinitelyTyped)
 
-### 参考资料
+## 参考资料
 
 1. [十道题目带你走进 TypeScript 世界，掘金](https://juejin.cn/post/6974713100826050591#heading-43)
 2. [深入理解 TypeScript，一本书](https://jkchao.github.io/typescript-book-chinese/#why)
 3. [声明文件，非常棒的讲解视频](https://www.bilibili.com/video/BV185411574h?p=2)
 4. [TS 中文官网](https://www.tslang.cn/docs/home.html)
 5. [大前端技能 TypeScript\_从 0 到 1 完全解读，技能加分项](https://www.bilibili.com/video/BV1i541147NW?p=25&spm_id_from=pageDriver)
+6. [1.8W字|了不起的 TypeScript 入门教程（第二版）](http://www.semlinker.com/ts-comprehensive-tutorial/)
