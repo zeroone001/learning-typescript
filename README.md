@@ -165,7 +165,7 @@ function myFunction(x: number): number {
 let y: number = 0;
 
 function myFunction(x: number): void {
-   y = x*2;
+   y = x * 2;
 }
 
 /* 匿名函数 */
@@ -179,6 +179,23 @@ function myFunction(a: number, b?:number): number {
   } else {
     return a+5;
   }
+}
+/* 定义函数类型 */
+let IdGenerator: (chars: string, nums: number) => string;
+
+function createUserId(name: string, id: number): string {
+  return name + id;
+}
+
+IdGenerator = createUserId;
+/* 默认参数 */
+// 注意，可选参数，要放在普通参数的后面，否则会导致报错
+function createUserId(
+  name: string = "semlinker",
+  id: number,
+  age?: number
+): string {
+  return name + id;
 }
 ```
 
@@ -779,6 +796,69 @@ let greet = (message: Message) => {
   // ...
 };
 ```
+
+## 交叉类型 & 
+
+交叉类型，是将多个类型合并为一个类型
+
+通过 & 运算符可以将现有的多种类型叠加到一起成为一种类型，它包含了所需的所有类型的特性
+
+```js
+type PartialPointX = { x: number; };
+type Point = PartialPointX & { y: number; };
+
+let point: Point = {
+  x: 1,
+  y: 1
+}
+/* 同名 基础类型 属性的合并 */
+interface X {
+  c: string;
+  d: string;
+}
+
+interface Y {
+  c: number;
+  e: string
+}
+
+type XY = X & Y;
+type YX = Y & X;
+
+let p: XY;
+let q: YX;
+/* 成员 c 的类型会变成 never 呢 
+  因为混入后成员 c 的类型为 string & number，
+  即成员 c 的类型既可以是 string 类型又可以是 number 类型。
+  很明显这种类型是不存在的，所以混入后成员 c 的类型为 never
+*/
+p = { c: '123', d: "d", e: "e" };
+
+/* 同名 非基础类型 属性的合并 */
+interface D { d: boolean; }
+interface E { e: string; }
+interface F { f: number; }
+
+interface A { x: D; }
+interface B { x: E; }
+interface C { x: F; }
+
+type ABC = A & B & C;
+
+let abc: ABC = {
+  x: {
+    d: true,
+    e: 'semlinker',
+    f: 666
+  }
+};
+/* 成功合并 */
+console.log('abc:', abc);
+```
+
+
+
+
 
 ## ts-node
 

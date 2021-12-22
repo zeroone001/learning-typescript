@@ -593,3 +593,21 @@ enum Direction {
   WEST,
 }
 let dir: Direction = Direction.NORTH;
+
+interface X {
+  c: string;
+  d: string;
+}
+
+interface Y {
+  c: number;
+  e: string
+}
+
+type XY = X & Y;
+type YX = Y & X;
+
+let p: XY;
+let q: YX;
+
+p = { d: "d", e: "e" };
