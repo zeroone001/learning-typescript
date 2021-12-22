@@ -11,6 +11,7 @@ typeof 可以用来获取一个变量的声明类型
 ## 基础类型
 
 http://www.semlinker.com/ts-comprehensive-tutorial/
+
 ### enum 枚举类型
 
 NORTH
