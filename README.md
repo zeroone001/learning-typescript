@@ -1,9 +1,6 @@
 # TypeScript
 
 
-
-交叉类型 &
-
 ## compile TS
 
 ```js
@@ -42,6 +39,7 @@ let dirVal = Direction["NORTH"]; // 0
 可以赋值给unknown类型的值，但是不可以，把unknow类型的值给别的类型的值
 
 将 value 变量类型设置为 unknown 后，这些操作都不再被认为是类型正确的。通过将 any 类型改变为 unknown 类型，我们已将允许所有更改的默认设置，更改为禁止任何更改。
+
 ```js
 let value: unknown;
 
@@ -361,13 +359,17 @@ let five_array = [...two_array, 2, 3, 4];
 ```
 
 
-## Classes 类
+## Class 类
 
 在面向对象语言中，类是一种面向对象计算机编程语言的构造，是创建对象的蓝图，
 描述了所创建的对象共同的属性和方法
 
 ```js
-/* 1 */
+/* 1 
+  静态成员 使用 类名 来调用，实例成员 使用 this 来调用
+  静态成员 不会被实例继承，只能通过类来调用；
+
+*/
 class Greeter {
   // 静态属性
   static cname: string = "Greeter";
@@ -393,7 +395,11 @@ class Greeter {
 let greeter = new Greeter("world");
 
 // 编译之后的如下
-
+/* 
+  成员方法定义在了原型上，静态方法直接在这个类上
+  类的静态属性， 类的实例属性
+  
+ */
 "use strict";
 var Greeter = /** @class */ (function () {
     // 构造函数 - 执行初始化操作
@@ -442,6 +448,121 @@ class Tiger extends Panthera {
 let tigger = new Tiger("loud");
 console.log(tigger.roar);
 console.log(tigger.stripes);
+```
+
+### 私有字段
+
+私有字段以 # 字符开头，有时我们称之为私有名称；
+每个私有字段名称都唯一地限定于其包含的类；
+不能在私有字段上使用 TypeScript 可访问性修饰符（如 public 或 private）；
+私有字段不能在包含的类之外访问，甚至不能被检测到
+
+```ts
+class Person {
+  #name: string;
+  constructor (name: string) {
+    this.#name = name;
+  }
+}
+```
+
+### 访问器 get set
+
+```ts
+let passcode = "Hello TypeScript";
+
+class Employee {
+  private _fullName: string;
+
+  get fullName(): string {
+    return this._fullName;
+  }
+
+  set fullName(newName: string) {
+    if (passcode && passcode == "Hello TypeScript") {
+      this._fullName = newName;
+    } else {
+      console.log("Error: Unauthorized update of employee!");
+    }
+  }
+}
+
+let employee = new Employee();
+employee.fullName = "Semlinker";
+if (employee.fullName) {
+  console.log(employee.fullName);
+}
+```
+
+### 类的继承
+
+```ts
+class Animal {
+  name: string;
+  
+  constructor(theName: string) {
+    this.name = theName;
+  }
+  
+  move(distanceInMeters: number = 0) {
+    console.log(`${this.name} moved ${distanceInMeters}m.`);
+  }
+}
+
+class Snake extends Animal {
+  constructor(name: string) {
+    super(name); // 调用父类的构造函数
+  }
+  
+  move(distanceInMeters = 5) {
+    console.log("Slithering...");
+    super.move(distanceInMeters);
+  }
+}
+
+let sam = new Snake("Sammy the Python");
+sam.move();
+```
+
+### abstract 抽象类
+
+不能被实例化
+
+使用 abstract 关键字声明的类，我们称之为抽象类
+
+只能去实例化实现了所有抽象方法的子类
+
+```js
+abstract class Person {
+  constructor(public name: string){}
+
+  abstract say(words: string) :void;
+}
+
+// Cannot create an instance of an abstract class.(2511)
+const lolo = new Person(); // Error
+```
+
+### 类方法重载
+
+类不能重载，只是方法的重载
+
+```ts
+class ProductService {
+    getProducts(): void;
+    getProducts(id: number): void;
+    getProducts(id?: number) {
+      if(typeof id === 'number') {
+          console.log(`获取id为 ${id} 的产品信息`);
+      } else {
+          console.log(`获取所有的产品信息`);
+      }  
+    }
+}
+
+const productService = new ProductService();
+productService.getProducts(666); // 获取id为 666 的产品信息
+productService.getProducts(); // 获取所有的产品信息
 ```
 
 ## interface 接口
@@ -703,7 +824,13 @@ interface 能够声明合并
 - 确保属性的存在
 - 检查对象上键是否存在
 
-```js
+泛型（Generics）是允许同一个函数接受不同类型参数的一种模板。相比于使用 any 类型，使用泛型来创建可复用的组件要更好，因为泛型会保留参数类型
+
+* K（Key）：表示对象中的键类型
+* V（Value）：表示对象中的值类型；
+* E（Element）：表示元素类型
+
+```ts
 function getProperty<T, K extends keyof T> (obj: T, key: K): T[K] {
     return obj[key];
 }
