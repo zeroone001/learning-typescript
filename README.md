@@ -197,9 +197,40 @@ function createUserId(
 ): string {
   return name + id;
 }
+/* 剩余参数 */
+function myFun (array, ...items) {
+}
+myFun([], 1,2,3);
+/* 函数重载 */
+// 在定义重载的时候，一定要把最精确的定义放在最前面
+function add(a: number, b: number): number;
+function add(a: string, b: string): string;
+function add(a: string, b: number): string;
+function add(a: number, b: string): string;
+function add(a: Combinable, b: Combinable) {
+  // type Combinable = string | number;
+  if (typeof a === 'string' || typeof b === 'string') {
+    return a.toString() + b.toString();
+  }
+  return a + b;
+}
 ```
 
-## Classes
+## array 数组 []
+
+```js
+/* 展开运算符 */
+let two_array = [0, 1];
+let five_array = [...two_array, 2, 3, 4];
+```
+
+
+## Classes 类
+
+在面向对象语言中，类是一种面向对象计算机编程语言的构造，是创建对象的蓝图，
+描述了所创建的对象共同的属性和方法。
+
+
 
 ```js
 class Astronaut {
@@ -232,9 +263,16 @@ console.log(tigger.roar);
 console.log(tigger.stripes);
 ```
 
-## interface
+## interface 接口
+
+接口和类型别名，都可以用来描述对象的形状或者函数签名
 
 ```js
+/* 用来描述函数 */
+interface SetPoint {
+  (x: number, y: number): void;
+}
+/* 用来描述对象 */
 interface Astronaut {
    name: string;
 }
@@ -303,6 +341,22 @@ export class className {
 import { className } from 'relativefilepath';
 
 let newClass = new className;
+/*  */
+```
+
+### 类型别名 type
+
+与接口类型不一样，类型别名 可以用于一些其他类型，比如原始类型，联合类型，和元组
+
+```js
+type Name = string;
+type Name = {
+  x: number;
+}
+/* 联合类型 */
+type Name = People | Student;
+/* tuple */
+type Name = [string, number];
 ```
 
 ## compile TS
@@ -326,7 +380,6 @@ npm install -g typescript
 
 
 
-### Everyday Types(日常类型)
 
 ## Enums (枚举)
 
@@ -359,7 +412,12 @@ const enum Enum {
 }
 ```
 
-## extends
+## extends 扩展
+
+[Typescript关键字之extends](https://juejin.cn/post/6955816703431278628)
+
+接口和类型别名都能够被扩展，但语法有所不同
+此外，接口和类型别名不是互斥的。接口可以扩展类型别名，而反过来是不行的
 
 作用：
 
@@ -375,12 +433,46 @@ const enum Enum {
 `T extends U ? T : never` 找出 T 的交集
 
 ```js
-type Human = {    name: string;  }  type Duck = {    name: string;  }type Bool = Duck extends Human ? 'yes' : 'no'; // Bool => 'yes'
+type Human = { name: string; } type Duck = { name: string; }type Bool = Duck extends Human ? 'yes' : 'no'; // Bool => 'yes'
 ```
 
 `A extends B` 指的是类型 A 可以分配给类型 B，而不是类型 A 是类型 B 的子集
 
-[https://juejin.cn/post/6955816703431278628](https://juejin.cn/post/6955816703431278628)
+```js
+// Interface extends interface
+interface Name {
+  x: number
+}
+interface People extends Name {
+  y: number;
+}
+/* Type alias extends type alias */
+type Name = { x: number };
+type People = Name & {y: number};
+/* Type alias extends interface */
+interface PartialPointX { x: number; }
+type Point = PartialPointX & { y: number; };
+/* Interface extends type alias */
+type PartialPointX = { x: number; };
+interface Point extends PartialPointX { y: number; }
+```
+
+### implements
+
+类可以以相同的方式实现接口或类型别名，但类不能实现使用类型别名定义的联合类型：
+
+```js
+interface Point {
+  x: number;
+  y: number;
+}
+
+class SomePoint implements Point {
+  x = 1;
+  y = 2;
+}
+```
+
 
 ## infer
 
