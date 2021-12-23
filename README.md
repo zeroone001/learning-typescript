@@ -862,6 +862,9 @@ interface Afun<T = string> {
 T extends U ? X : Y
 ```
 
+### 泛型接口
+
+
 
 ```js
 /* 泛型接口 */
