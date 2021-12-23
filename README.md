@@ -1,6 +1,5 @@
 # TypeScript
 
-
 ## compile 编译上下文
 
 ```js
@@ -1084,6 +1083,7 @@ function addPerson(...args: [name: string, age: number]): void {
   console.log(`Person info: name: ${args[0]}, age: ${args[1]}`);
 }
 ```
+
 ## 声明文件
 
 - interface 和 type 是不需要 declare 声明的，
