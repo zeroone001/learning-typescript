@@ -637,3 +637,18 @@ class Person {
 }
 let semlinker = new Person("Semlinker");
 semlinker.#name;
+
+interface Person {
+  name: string;
+  age: number;
+}
+type K3 = keyof { [x: string]: Person };  // string | number
+
+type Keyss = 'a' | 'b' | 'c';
+enum Mykeys {
+  LEFT = 9,
+  RIGHT
+}
+type Obj = {
+  [p in Mykeys]: string
+}

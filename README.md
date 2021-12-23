@@ -13,7 +13,7 @@ http://www.semlinker.com/ts-comprehensive-tutorial/
 
 ### enum 枚举类型
 
-NORTH
+
 ```js
 enum Direction {
   NORTH,
@@ -873,8 +873,75 @@ T extends U ? X : Y
 ```
 
 
+```js
+/* 泛型接口 */
+interface Name<T> {
+  (arg: T): T;
+}
+/* 泛型类 */
+class GenericNumber<T> {
+  zeroValue: T;
+  add: (x: T, y: T) => T;
+}
+
+let myGenericNumber = new GenericNumber<number>();
+myGenericNumber.zeroValue = 0;
+myGenericNumber.add = function (x, y) {
+  return x + y;
+};
+```
 
 ## Utility Types (实用类型) 泛型工具类型
+
+### typeof
+
+可以用来获取一个变量声明或者对象的类型
+
+```js
+interface Person {
+  name: string;
+  age: number;
+}
+
+const sem: Person = { name: 'semlinker', age: 33 };
+type Sem = typeof sem; // Person
+function toArray(x: number): Array<number> {
+  return [x];
+}
+
+type Func = typeof toArray; // -> (x: number) => number[]
+```
+
+### keyof
+
+获取某种类型的所有的键，其返回类型是联合类型
+
+其中的原因就是当使用数值索引时，JavaScript 在执行索引操作时，会先把数值索引先转换为字符串索引。
+所以 keyof { [x: string]: Person } 的结果会返回 string | number
+
+```ts
+interface Person {
+  name: string;
+  age: number;
+}
+type K1 = keyof Person; // 'name' | 'age'
+type K2 = keyof Person[]; // "length" | "toString" | "pop" | "push" | "concat" | "join" 
+type K3 = keyof { [x: string]: Person };  // string | number 这个很特殊
+```
+
+### in
+
+用来遍历枚举类型
+
+```ts
+type Keys = 'a' | 'b' | 'c';
+type Obj = {
+  [p in Keys]: string
+}
+```
+
+
+### Partial
 
 - Partial 可以将类型中的所有属性变成可选属性
 
