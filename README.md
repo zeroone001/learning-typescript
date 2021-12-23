@@ -868,7 +868,7 @@ myGenericNumber.add = function (x, y) {
 };
 ```
 
-## Utility Types (实用类型) 泛型工具类型
+## Utility Types 泛型工具类型
 
 ### typeof
 
@@ -951,7 +951,10 @@ function myFun<T extends LengthWise>(args: T): T {
 - Partial 可以将类型中的所有属性变成可选属性
 
 ```ts
-
+/* 定义 */
+type Partial<T> = {
+  [P in keyof T]?: T[P];
+} 
 ```
 ### Record<keys, Type>
 
@@ -976,6 +979,84 @@ const cats: Record<CatName, CatInfo> = {
 type MyRecord<T extends keyof any, U> = {
     [P in T]: U
 }
+```
+
+## 装饰器 Decorators
+
+装饰器是一种特殊类型的声明，它能够被附加到类声明，方法， 访问符，属性或参数上。 
+装饰器使用 @expression这种形式，expression求值后必须为一个函数，
+它会在运行时被调用，被装饰的声明信息做为参数传入。
+
+```ts
+// 装饰器工厂
+function color (value: string) { // 这是工厂
+  return function (target) { /* 这是装饰器 */
+    // do something with "target" and "value"...
+  }
+}
+```
+```ts
+/* 类装饰器 */
+function Greeter(greeting: string) {
+  return function (target: Function) {
+    target.prototype.greet = function (): void {
+      console.log(greeting);
+    };
+  };
+}
+
+@Greeter("Hello TS!")
+class Greeting {
+  constructor() {
+    // 内部实现
+  }
+}
+
+let myGreeting = new Greeting();
+myGreeting.greet(); // console output: 'Hello TS!';
+/* 属性装饰器 */
+function logProperty(target: any, key: string) {
+    delete target[key];
+    const backingField = "_" + key;
+    Object.defineProperty(target, backingField, {
+      writable: true,
+      enumerable: true,
+      configurable: true
+    });
+  
+    // property getter
+    const getter = function (this: any) {
+      const currVal = this[backingField];
+      console.log(`Get: ${key} => ${currVal}`);
+      return currVal;
+    };
+  
+    // property setter
+    const setter = function (this: any, newVal: any) {
+      console.log(`Set: ${key} => ${newVal}`);
+      this[backingField] = newVal;
+    };
+  
+    // Create new property with getter and setter
+    Object.defineProperty(target, key, {
+      get: getter,
+      set: setter,
+      enumerable: true,
+      configurable: true
+    });
+  }
+  
+class Person { 
+@logProperty
+public name: string;
+
+constructor(name : string) { 
+    this.name = name;
+}
+}
+
+const p1 = new Person("semlinker");
+p1.name = "kakuqo";
 ```
 
 ## 声明文件

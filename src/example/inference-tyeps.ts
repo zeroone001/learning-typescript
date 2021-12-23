@@ -15,7 +15,7 @@ foo = 123;
 
 foo = 'eqw';
 
-let obj222: BB = {
-    name: '123'
-}
+// let obj222: BB = {
+//     name: '123'
+// }
 

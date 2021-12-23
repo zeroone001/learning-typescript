@@ -279,22 +279,22 @@ interface Person10 {
 
 
   // 工具泛型 太复杂了，没看明白
-  type AppendArgX<Fn, X> = Fn extends (...args: infer P) => infer R ? (...args: [...P, X])=>R : never;
+// type AppendArgX<Fn, X> = Fn extends (...args: infer P) => infer R ? (...args: [...P, X])=>R : never;
   
   type Fn = (a: number, b: string) => number
 
-type NewFn = AppendArgX<Fn, boolean> 
+// type NewFn = AppendArgX<Fn, boolean> 
 // NewFn 期望是 (a: number, b: string, x: boolean) => number
 
 type Required<T> = {
 
 }
 
-type GetRequired<T> = {
-    [key in Required<T>]: T[key]
-}
+// type GetRequired<T> = {
+//     [key in Required<T>]: T[key]
+// }
 
-type T88 = GetRequired<{name: string, age: number, sex?: string}>
+// type T88 = GetRequired<{name: string, age: number, sex?: string}>
 // T1 的期望是 {name: string, age: number}
 
 
@@ -610,7 +610,7 @@ type YX = Y & X;
 let p: XY;
 let q: YX;
 
-p = { d: "d", e: "e" };
+// p = { d: "d", e: "e" };
 
 function isString(test: any): test is string{
     return typeof test === "string";
@@ -624,19 +624,6 @@ function example(foo: any){
 }
 example("hello world");
 
-class Person {
-  #name: string;
-
-  constructor(name: string) {
-    this.#name = name;
-  }
-
-  greet() {
-    console.log(`Hello, my name is ${this.#name}!`);
-  }
-}
-let semlinker = new Person("Semlinker");
-semlinker.#name;
 
 interface Person {
   name: string;
