@@ -771,29 +771,6 @@ class SomePoint implements Point {
 }
 ```
 
-
-## infer
-
-在 extends 语句中，还支持 infer 关键字，可以推断一个类型变量，高效的对类型进行模式匹配
-
-经典例子
-
-```js
-type ReturnType<T> = T extends (...args: any[]) => infer R ? R : any;
-
-
-```
-
-```js
-type Response = Promise<number[]>;
-type Unpacked<T> = T extends Promise<infer R>? R : T;
-
-type resType = Unpacked<Response>; // resType 类型为number[]
-
-```
-
-infer 推断联合类型
-
 ## interface 与 type 区别
 
 参考资料： [https://juejin.cn/post/6844903749501059085](https://juejin.cn/post/6844903749501059085)
@@ -940,11 +917,42 @@ type Obj = {
 }
 ```
 
+### infer
 
+在 extends 语句中，还支持 infer 关键字，可以推断一个类型变量，高效的对类型进行模式匹配
+
+infer 声明一个类型变量，并且对他进行使用
+
+```js
+/* 经典示例 */
+type ReturnType<T> = T extends (...args: any[]) => infer R ? R : any;
+
+type Response = Promise<number[]>;
+type Unpacked<T> = T extends Promise<infer R>? R : T;
+
+type resType = Unpacked<Response>; // resType 类型为number[]
+```
+### extends
+
+```js
+/* 有时候，我们定义的泛型，不想过于灵活，想继承某些类，可以使用extends
+  添加泛型约束
+*/
+interface LengthWise {
+  length: number;
+}
+function myFun<T extends LengthWise>(args: T): T {
+  console.log(args.length);
+  return args;
+}
+```
 ### Partial
 
 - Partial 可以将类型中的所有属性变成可选属性
 
+```ts
+
+```
 ### Record<keys, Type>
 
 ```js

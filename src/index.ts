@@ -652,3 +652,5 @@ enum Mykeys {
 type Obj = {
   [p in Mykeys]: string
 }
+
+type ReturnType<T> = T extends (...args: any[]) => infer R ? R : any;
