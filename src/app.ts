@@ -44,3 +44,7 @@ constructor(name : string) {
 
 const p1 = new Person("semlinker");
 p1.name = "kakuqo";
+
+function addPerson(...args: [name: string, age: number]): void {
+    console.log(`Person info: name: ${args[0]}, age: ${args[1]}`);
+  }
