@@ -635,7 +635,5 @@ class Person {
     console.log(`Hello, my name is ${this.#name}!`);
   }
 }
-
 let semlinker = new Person("Semlinker");
-
 semlinker.#name;
