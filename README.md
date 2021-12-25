@@ -741,8 +741,8 @@ const enum Enum {
 
 [Typescript关键字之extends](https://juejin.cn/post/6955816703431278628)
 
-接口和类型别名都能够被扩展，但语法有所不同
-此外，接口和类型别名不是互斥的。接口可以扩展类型别名，而反过来是不行的
+1. 接口和类型别名都能够被扩展，但语法有所不同
+2. 此外，接口和类型别名不是互斥的。接口可以扩展类型别名，而反过来是不行的
 
 作用：
 
@@ -780,6 +780,19 @@ type Point = PartialPointX & { y: number; };
 /* Interface extends type alias */
 type PartialPointX = { x: number; };
 interface Point extends PartialPointX { y: number; }
+```
+
+```ts
+/* 有时候，我们定义的泛型，不想过于灵活，想继承某些类，可以使用extends
+  添加泛型约束
+*/
+interface LengthWise {
+  length: number;
+}
+function myFun<T extends LengthWise>(args: T): T {
+  console.log(args.length);
+  return args;
+}
 ```
 
 ### implements
@@ -878,8 +891,6 @@ T extends U ? X : Y
 
 ### 泛型接口
 
-
-
 ```js
 /* 泛型接口 */
 interface Name<T> {
@@ -962,20 +973,7 @@ type Unpacked<T> = T extends Promise<infer R>? R : T;
 
 type resType = Unpacked<Response>; // resType 类型为number[]
 ```
-### extends
 
-```js
-/* 有时候，我们定义的泛型，不想过于灵活，想继承某些类，可以使用extends
-  添加泛型约束
-*/
-interface LengthWise {
-  length: number;
-}
-function myFun<T extends LengthWise>(args: T): T {
-  console.log(args.length);
-  return args;
-}
-```
 ### Partial
 
 - Partial 可以将类型中的所有属性变成可选属性
@@ -986,6 +984,7 @@ type Partial<T> = {
   [P in keyof T]?: T[P];
 } 
 ```
+
 ### Record<keys, Type>
 
 ```js
