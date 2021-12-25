@@ -397,3 +397,55 @@ class Greeting {
 let myGreeting = new Greeting();
 myGreeting.greet(); // console output: 'Hello Semlinker!';
 ```
+
+### 参数装饰器
+
+```ts
+function Log(target: Function, key: string, parameterIndex: number) {
+  let functionLogged = key || target.prototype.constructor.name;
+  console.log(`The parameter in position ${parameterIndex} at ${functionLogged} has
+	been decorated`);
+}
+
+class Greeter {
+  greeting: string;
+  constructor(@Log phrase: string) {
+	this.greeting = phrase; 
+  }
+}
+
+// console output: The parameter in position 0 
+// at Greeter has been decorated
+```
+
+## #xxxx 私有字段，class的
+
+仅在面向ES2015 可用
+
+私有字段以 # 字符开头，有时我们称之为私有名称；
+每个私有字段名称都唯一地限定于其包含的类；
+不能在私有字段上使用 TypeScript 可访问性修饰符（如 public 或 private）；
+私有字段不能在包含的类之外访问，甚至不能被检测到。
+
+使用 # 号定义的 ECMAScript 私有字段，会通过 WeakMap 对象来存储，同时编译器会生成 __classPrivateFieldSet 和 __classPrivateFieldGet 这两个方法用于设置值和获取值。
+
+```ts
+class Person {
+  #name: string;
+
+  constructor(name: string) {
+    this.#name = name;
+  }
+
+  greet() {
+    console.log(`Hello, my name is ${this.#name}!`);
+  }
+}
+
+let semlinker = new Person("Semlinker");
+
+semlinker.#name;
+//     ~~~~~
+// Property '#name' is not accessible outside class 'Person'
+// because it has a private identifier.
+```
