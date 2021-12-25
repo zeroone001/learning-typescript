@@ -10,7 +10,7 @@
 6. [工具类型](https://github.com/zeroone001/learning-typescript/blob/main/doc/%E5%B7%A5%E5%85%B7%E7%B1%BB%E5%9E%8B.md)
 7. [类型断言](https://github.com/zeroone001/learning-typescript/blob/main/doc/%E7%B1%BB%E5%9E%8B%E6%96%AD%E8%A8%80.md)
 8. [高级类型](https://github.com/zeroone001/learning-typescript/blob/main/doc/%E9%AB%98%E7%BA%A7%E7%B1%BB%E5%9E%8B.md)
-9. []()
+9. [泛型T](https://github.com/zeroone001/learning-typescript/blob/main/doc/%E6%B3%9B%E5%9E%8B.md)
 10. []()
 11. []()
 12. []()
