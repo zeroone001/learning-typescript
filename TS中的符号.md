@@ -152,3 +152,58 @@ let point: Point = {
 }
 ```
 
+### 同名基础类型属性的合并
+
+里面的c 属性，会变成 never， 因为不可能有既是number又是string的属性
+
+```ts
+interface X {
+  c: string;
+  d: string;
+}
+
+interface Y {
+  c: number;
+  e: string
+}
+
+type XY = X & Y;
+type YX = Y & X;
+
+let p: XY;
+let q: YX;
+```
+
+### 非基础的数据类型，是可以合并成功的
+
+```ts
+interface D { d: boolean; }
+interface E { e: string; }
+interface F { f: number; }
+
+interface A { x: D; }
+interface B { x: E; }
+interface C { x: F; }
+
+type ABC = A & B & C;
+
+let abc: ABC = {
+  x: {
+    d: true,
+    e: 'semlinker',
+    f: 666
+  }
+};
+
+console.log('abc:', abc);
+```
+
+## | 联合类型
+
+这个是非常常用的符号
+
+```ts
+const sayHello = (name: string | undefined) => { /* ... */ };
+```
+
+
