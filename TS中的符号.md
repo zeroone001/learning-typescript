@@ -340,3 +340,60 @@ _126301  // Error
 // 当然你也不能连续使用多个 _ 分隔符
 123__456 // Error
 ```
+
+## <Type> 语法
+
+### TS 断言
+
+```ts
+/* as */
+let someValue: any = "this is a string";
+let strLength: number = (someValue as string).length;
+
+/* 尖括号语法 */
+let someValue: any = "this is a string";
+let strLength: number = (<string>someValue).length;
+```
+
+## @xxx 装饰器语法
+
+装饰器的本质是一个函数，通过装饰器我们可以方便地定义与对象相关的元数据。
+
+在 TypeScript 中装饰器分为类装饰器、属性装饰器、方法装饰器和参数装饰器四大类
+
+```ts
+/* @Plugin({...}) 和 @Injectable() 最终会被转换成普通的方法调用，
+它们的调用结果最终会以数组的形式作为参数传递给 __decorate 函数，
+而在 __decorate 函数内部会以 Device 类作为参数调用各自的类型装饰器，
+从而扩展对应的功能。
+ */
+@Plugin({
+  pluginName: 'Device',
+  plugin: 'cordova-plugin-device',
+  pluginRef: 'device',
+  repo: 'https://github.com/apache/cordova-plugin-device',
+  platforms: ['Android', 'Browser', 'iOS', 'macOS', 'Windows'],
+})
+@Injectable()
+export class Device extends IonicNativePlugin {}
+
+```
+### 类装饰器
+
+```ts
+function Greeter(target: Function): void {
+  target.prototype.greet = function (): void {
+    console.log("Hello Semlinker!");
+  };
+}
+
+@Greeter
+class Greeting {
+  constructor() {
+    // 内部实现
+  }
+}
+
+let myGreeting = new Greeting();
+myGreeting.greet(); // console output: 'Hello Semlinker!';
+```
