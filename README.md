@@ -1,5 +1,20 @@
 # TypeScript
 
+## 快捷链接
+
+1. [interface](https://github.com/zeroone001/learning-typescript/blob/main/doc/interface.md)
+2. [DOM类型声明](https://github.com/zeroone001/learning-typescript/blob/main/doc/DOM%E7%B1%BB%E5%9E%8B%E5%A3%B0%E6%98%8E.md)
+3. [tsconfig配置项信息详解](https://github.com/zeroone001/learning-typescript/blob/main/doc/tsconfig%E9%85%8D%E7%BD%AE%E9%A1%B9%E4%BF%A1%E6%81%AF%E8%AF%A6%E8%A7%A3.md)
+4. [基础类型](https://github.com/zeroone001/learning-typescript/blob/main/doc/%E5%9F%BA%E7%A1%80%E7%B1%BB%E5%9E%8B.md)
+5. [声明文件](https://github.com/zeroone001/learning-typescript/blob/main/doc/%E5%A3%B0%E6%98%8E%E6%96%87%E4%BB%B6.md)
+6. [工具类型](https://github.com/zeroone001/learning-typescript/blob/main/doc/%E5%B7%A5%E5%85%B7%E7%B1%BB%E5%9E%8B.md)
+7. [类型断言](https://github.com/zeroone001/learning-typescript/blob/main/doc/%E7%B1%BB%E5%9E%8B%E6%96%AD%E8%A8%80.md)
+8. [高级类型](https://github.com/zeroone001/learning-typescript/blob/main/doc/%E9%AB%98%E7%BA%A7%E7%B1%BB%E5%9E%8B.md)
+9. []()
+10. []()
+11. []()
+12. []()
+
 ## compile 编译上下文
 
 ```js
