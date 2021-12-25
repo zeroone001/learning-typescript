@@ -1,5 +1,12 @@
 # TS 中的一些符号
 
+建议去看下面的参考资料，下面所写主要用于自己的一个学习记忆；
+因为下面的内容非自己原创
+
+## 参考资料
+
+[http://www.semlinker.com/ts-surprising-symbol/](http://www.semlinker.com/ts-surprising-symbol/)
+
 ## ! 非空断言操作符
 
 x! 将 null 和 undefined 从x 的 值域中排除
@@ -204,6 +211,132 @@ console.log('abc:', abc);
 
 ```ts
 const sayHello = (name: string | undefined) => { /* ... */ };
+/* 字符串字面量类型 */
+let num: 1 | 2 = 1;
 ```
 
+## 类型保护 in typeof instanceof is
 
+四种方式
+
+当使用联合类型时，我们必须尽量把当前值的类型收窄为当前值的实际类型，而类型保护就是实现类型收窄的一种手段。
+
+### in 关键字
+
+```ts
+interface Admin {
+  name: string;
+  privileges: string[];
+}
+
+interface Employee {
+  name: string;
+  startDate: Date;
+}
+
+type UnknownEmployee = Employee | Admin;
+
+function printEmployeeInformation(emp: UnknownEmployee) {
+  console.log("Name: " + emp.name);
+  if ("privileges" in emp) {
+    console.log("Privileges: " + emp.privileges);
+  }
+  if ("startDate" in emp) {
+    console.log("Start Date: " + emp.startDate);
+  }
+}
+```
+### typeof 关键字
+
+typeof 类型保护只支持两种形式：typeof v === "typename" 和 typeof v !== typename
+
+typename 必须是 number string，boolean symbol
+
+
+```ts
+function padLeft(value: string, padding: string | number) {
+  if (typeof padding === "number") {
+      return Array(padding + 1).join(" ") + value;
+  }
+  if (typeof padding === "string") {
+      return padding + value;
+  }
+  throw new Error(`Expected string or number, got '${padding}'.`);
+}
+```
+
+### instanceof 关键字
+
+```ts
+interface Padder {
+  getPaddingString(): string;
+}
+
+class SpaceRepeatingPadder implements Padder {
+  constructor(private numSpaces: number) {}
+  getPaddingString() {
+    return Array(this.numSpaces + 1).join(" ");
+  }
+}
+
+class StringPadder implements Padder {
+  constructor(private value: string) {}
+  getPaddingString() {
+    return this.value;
+  }
+}
+
+let padder: Padder = new SpaceRepeatingPadder(6);
+
+if (padder instanceof SpaceRepeatingPadder) {
+  // padder的类型收窄为 'SpaceRepeatingPadder'
+}
+```
+
+### 类型谓词 is
+
+```ts
+function isNumber(x: any): x is number {
+  return typeof x === "number";
+}
+
+function isString(x: any): x is string {
+  return typeof x === "string";
+}
+```
+
+## _ 数字分隔符
+
+TypeScript 2.7 带来了对数字分隔符的支持，正如数值分隔符 ECMAScript 提案中所概述的那样。对于一个数字字面量，你现在可以通过把一个下划线作为它们之间的分隔符来分组数字
+
+只能在两个数字之间添加 _ 分隔符
+
+```ts
+const inhabitantsOfMunich = 1_464_301;
+const distanceEarthSunInKm = 149_600_000;
+const fileSystemPermission = 0b111_111_000;
+const bytes = 0b1111_10101011_11110000_00001101;
+
+// Numeric separators are not allowed here.(6188)
+3_.141592 // Error
+3._141592 // Error
+
+// Numeric separators are not allowed here.(6188)
+1_e10 // Error
+1e_10 // Error
+
+// Cannot find name '_126301'.(2304)
+_126301  // Error
+// Numeric separators are not allowed here.(6188)
+126301_ // Error
+
+// Cannot find name 'b111111000'.(2304)
+// An identifier or keyword cannot immediately follow a numeric literal.(1351)
+0_b111111000 // Error
+
+// Numeric separators are not allowed here.(6188)
+0b_111111000 // Error
+
+// 当然你也不能连续使用多个 _ 分隔符
+123__456 // Error
+```
