@@ -64,3 +64,10 @@ type UnPromisify<T> = T extends PromiseType<infer U> ? U : never;
 type extractStringPromise = UnPromisify<typeof stringPromise>; // string
 type extractPersonPromise = UnPromisify<typeof personPromise>; // Person
 
+interface Todo {
+  title: string;
+  description: string;
+  completed: boolean;
+}
+
+type TodoPreview = Pick<Todo, "title" | "completed">;
