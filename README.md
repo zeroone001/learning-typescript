@@ -1457,7 +1457,12 @@ console.log('abc:', abc);
 获取页面中的内容： cheerio
 
 
-## 
+## TS 中的模式匹配
+
+```ts
+type getValue<T> = T extends Promise<infer R> ? R : never;
+```
+
 ## TS 题库
 
 [https://github.com/type-challenges/type-challenges/blob/master/README.zh-CN.md](https://github.com/type-challenges/type-challenges/blob/master/README.zh-CN.md)
