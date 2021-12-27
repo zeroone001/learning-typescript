@@ -11,7 +11,7 @@
 7. [类型断言](https://github.com/zeroone001/learning-typescript/blob/main/doc/%E7%B1%BB%E5%9E%8B%E6%96%AD%E8%A8%80.md)
 8. [高级类型](https://github.com/zeroone001/learning-typescript/blob/main/doc/%E9%AB%98%E7%BA%A7%E7%B1%BB%E5%9E%8B.md)
 9. [泛型T](https://github.com/zeroone001/learning-typescript/blob/main/doc/%E6%B3%9B%E5%9E%8B.md)
-10. []()
+10. [深入理解 TypeScript](https://jkchao.github.io/typescript-book-chinese/project/compilationContext.html#%E7%BC%96%E8%AF%91%E9%80%89%E9%A1%B9)
 11. []()
 12. []()
 
