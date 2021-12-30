@@ -38,29 +38,19 @@ tsconfig.json 重要字段:
 
 http://www.semlinker.com/ts-comprehensive-tutorial/
 
-### enum 枚举类型
+### any
 
+1. 任何类型都可以分配给any 类型
+2. any类型可以分配给任何类型（never类型除外）
 
-```js
-enum Direction {
-  NORTH,
-  SOUTH,
-  EAST,
-  WEST,
-}
-let dir: Direction = Direction.NORTH;
-/* 反向映射 */
-enum Direction {
-  NORTH,
-  SOUTH,
-  EAST,
-  WEST,
-}
+比较
 
-let dirName = Direction[0]; // NORTH
-let dirVal = Direction["NORTH"]; // 0
+unknow 类型： 任何类型都可以分配给unknown类型；但是unknow类型只可以分配给unknown或者any
+never 类型： 任何类型都不能分配给never；可以分配给其他任何类型
+
+```ts
+
 ```
-
 ### unknow 类型
 
 可以赋值给unknown类型的值，但是不可以，把unknow类型的值给别的类型的值
@@ -91,6 +81,60 @@ let value5: string = value; // Error
 let value6: object = value; // Error
 let value7: any[] = value; // Error
 let value8: Function = value; // Error
+```
+
+### never
+
+never 类型表示的是那些永不存在的值的类型
+
+使用 never 避免出现新增了联合类型没有对应的实现，
+目的就是写出类型绝对安全的代码。
+
+```js
+// 返回never的函数必须存在无法达到的终点
+function error(message: string): never {
+  throw new Error(message);
+}
+
+function infiniteLoop(): never {
+  while (true) {}
+}
+/* 2 */
+type Foo = string | number;
+
+function controlFlowAnalysisWithNever(foo: Foo) {
+  if (typeof foo === "string") {
+    // 这里 foo 被收窄为 string 类型
+  } else if (typeof foo === "number") {
+    // 这里 foo 被收窄为 number 类型
+  } else {
+    // foo 在这里是 never
+    const check: never = foo;
+  }
+}
+```
+
+### enum 枚举类型
+
+
+```js
+enum Direction {
+  NORTH,
+  SOUTH,
+  EAST,
+  WEST,
+}
+let dir: Direction = Direction.NORTH;
+/* 反向映射 */
+enum Direction {
+  NORTH,
+  SOUTH,
+  EAST,
+  WEST,
+}
+
+let dirName = Direction[0]; // NORTH
+let dirVal = Direction["NORTH"]; // 0
 ```
 
 ### tuple 元组
@@ -152,36 +196,6 @@ const obj = {};
 obj.prop = "semlinker";
 ```
 
-### never
-
-never 类型表示的是那些永不存在的值的类型
-
-使用 never 避免出现新增了联合类型没有对应的实现，
-目的就是写出类型绝对安全的代码。
-
-```js
-// 返回never的函数必须存在无法达到的终点
-function error(message: string): never {
-  throw new Error(message);
-}
-
-function infiniteLoop(): never {
-  while (true) {}
-}
-/* 2 */
-type Foo = string | number;
-
-function controlFlowAnalysisWithNever(foo: Foo) {
-  if (typeof foo === "string") {
-    // 这里 foo 被收窄为 string 类型
-  } else if (typeof foo === "number") {
-    // 这里 foo 被收窄为 number 类型
-  } else {
-    // foo 在这里是 never
-    const check: never = foo;
-  }
-}
-```
 
 ## TS 断言 Assertion
 
