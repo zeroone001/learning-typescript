@@ -3,10 +3,6 @@
 建议去看下面的参考资料，下面所写主要用于自己的一个学习记忆；
 因为下面的内容非自己原创
 
-## 参考资料
-
-[http://www.semlinker.com/ts-surprising-symbol/](http://www.semlinker.com/ts-surprising-symbol/)
-
 ## ! 非空断言操作符
 
 x! 将 null 和 undefined 从x 的 值域中排除
@@ -449,3 +445,7 @@ semlinker.#name;
 // Property '#name' is not accessible outside class 'Person'
 // because it has a private identifier.
 ```
+
+## 参考资料
+
+[http://www.semlinker.com/ts-surprising-symbol/](http://www.semlinker.com/ts-surprising-symbol/)
