@@ -1,5 +1,11 @@
 export {};
 
+function myPromise() {
+  return new Promise((resolve, reject) => {
+    resolve('312');
+  });
+}
+myPromise().then(res => console.log(res));
 
 function Greeter(target: Function): void {
   target.prototype.greet = function (): void {
@@ -15,23 +21,23 @@ class Greeting {
 }
 
 let myGreeting = new Greeting();
-myGreeting.greet(); // console output: 'Hello Semlinker!';
+// myGreeting.greet(); // console output: 'Hello Semlinker!';
 
 class Person {
-  #name: string;
+  // #name: string;
 
   constructor(name: string) {
-    this.#name = name;
+    // this.#name = name;
   }
 
   greet() {
-    console.log(`Hello, my name is ${this.#name}!`);
+    // console.log(`Hello, my name is ${this.#name}!`);
   }
 }
 
-let semlinker = new Person("Semlinker");
+// let semlinker = new Person("Semlinker");
 
-semlinker.#name;
+// semlinker.#name;
 //     ~~~~~
 // Property '#name' is not accessible outside class 'Person'
 // because it has a private identifier.
@@ -70,4 +76,4 @@ interface Todo {
   completed: boolean;
 }
 
-type TodoPreview = Pick<Todo, "title" | "completed">;
+// type TodoPreview = Pick<Todo, "title" | "completed">;
