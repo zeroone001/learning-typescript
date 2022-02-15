@@ -347,22 +347,7 @@ type TupleToObject<T extends readonly any[]> = {
 };
 ```
 
-
-1.  实现 Exclude
-
-把某个类型中，属于另一个的类型移除掉
-
-
-答案：
-
-```js
-// 如果T能够赋值给U类型的话，那么就会返回never类型，否则返回T类型
-// 实现的效果就是把T类型中的U类型给排除掉
-type Exclude<T, U> = T extends U ? never: T;
-
-```
-
-14. 去除所有never成员
+1.  去除所有never成员
 
 答案： 
 
