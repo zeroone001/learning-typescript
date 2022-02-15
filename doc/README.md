@@ -348,17 +348,7 @@ type TupleToObject<T extends readonly any[]> = {
 ```
 
 
-12. 实现Record
-
-答案：
-
-```js
-type MyRecord<T extends typeof any, U> = {
-  [K in T]: U
-}
-```
-
-13. 实现 Exclude
+1.  实现 Exclude
 
 把某个类型中，属于另一个的类型移除掉
 
