@@ -1,8 +1,6 @@
 /* 
     类型断言
     assertions
-
-
 */
 export {};
 
