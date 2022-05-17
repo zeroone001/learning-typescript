@@ -133,3 +133,11 @@ type AppendArgument<F, A> = F extends (...args: infer Args) => infer Return ?
 
 type FinalFn = AppendArgument<Fn, boolean> 
 // (x: boolean, a: number, b: string) => number
+
+
+interface AA {
+    a: string;
+    b: number
+}
+
+type BB = keyof AA;
