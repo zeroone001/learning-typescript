@@ -141,3 +141,10 @@ interface AA {
 }
 
 type BB = keyof AA;
+
+interface foo {
+    a: number;
+    b: string;
+  }
+  
+  type A = keyof foo; // "a" | "b"
